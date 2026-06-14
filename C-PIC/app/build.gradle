@@ -10,6 +10,8 @@ android {
         version = release(37)
     }
 
+    buildToolsVersion '37.0.0'
+
     defaultConfig {
         applicationId "com.diamon.ptc"
         minSdk 23
