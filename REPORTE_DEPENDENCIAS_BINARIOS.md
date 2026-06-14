@@ -21,6 +21,16 @@ Este documento lista las dependencias y la matriz de renombrado entre la versió
 | `libopenblas.so`| `libopenblas.so` | `usr/lib/libopenblas.so` |
 | `libopenblas.so.0`| `libopenblas_so_0.so`| `usr/lib/libopenblas.so.0` |
 | `libtcl8.6.so` | `libtcl8_6.so` | `usr/lib/libtcl8.6.so` |
+
+*Nota:* `libtcl8_6.so` requiere un parche (`patchelf`) para cambiar la dependencia de `libz.so.1` a `libz.so` para ser compatible con el runtime de Android. Ver `FIXES.md` para más detalles.
+
 | `libtk8.6.so` | `libtk8_6.so` | `usr/lib/libtk8.6.so` |
+| `libz.so.1` | `libz_so_1.so` | `usr/lib/libz.so.1` |
+| `libX11.so` | `libX11.so` | `usr/lib/libX11.so` |
+| `libXext.so` | `libXext.so` | `usr/lib/libXext.so` |
+| `libXft.so` | `libXft.so` | `usr/lib/libXft.so` |
+| `libXss.so` | `libXss.so` | `usr/lib/libXss.so` |
+| `libfontconfig.so` | `libfontconfig.so` | `usr/lib/libfontconfig.so` |
+| `libfreetype.so` | `libfreetype.so` | `usr/lib/libfreetype.so` |
 
 *Nota:* Si OpenSees depende de otra librería del sistema o no incluida aquí (ej. `libz.so`, `libc++_shared.so`), se asume que provee el sistema operativo Android o se debe copiar a `jniLibs` y mapear en `AssetHelper.java` siguiendo el mismo patrón.

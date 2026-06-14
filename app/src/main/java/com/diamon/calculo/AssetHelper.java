@@ -126,13 +126,15 @@ public class AssetHelper {
         ok &= linkTool(new File(usrLib, "libopenblasp-r0.3.33.dev.so"), new File(nativeLibDir, "libopenblasp_r0_3_33_dev.so"));
         ok &= linkTool(new File(usrLib, "libtcl8.6.so"), new File(nativeLibDir, "libtcl8_6.so"));
         ok &= linkTool(new File(usrLib, "libtk8.6.so"), new File(nativeLibDir, "libtk8_6.so"));
+        ok &= linkTool(new File(usrLib, "libz.so.1"), new File(nativeLibDir, "libz_so_1.so"));
 
-        // System libraries that might be expected with specific versions
-        File systemLibZ = new File("/system/lib64/libz.so");
-        if (!systemLibZ.exists()) {
-            systemLibZ = new File("/system/lib/libz.so");
-        }
-        ok &= linkTool(new File(usrLib, "libz.so.1"), systemLibZ);
+        // X11 and Font Libraries
+        ok &= linkTool(new File(usrLib, "libX11.so"), new File(nativeLibDir, "libX11.so"));
+        ok &= linkTool(new File(usrLib, "libXext.so"), new File(nativeLibDir, "libXext.so"));
+        ok &= linkTool(new File(usrLib, "libXft.so"), new File(nativeLibDir, "libXft.so"));
+        ok &= linkTool(new File(usrLib, "libXss.so"), new File(nativeLibDir, "libXss.so"));
+        ok &= linkTool(new File(usrLib, "libfontconfig.so"), new File(nativeLibDir, "libfontconfig.so"));
+        ok &= linkTool(new File(usrLib, "libfreetype.so"), new File(nativeLibDir, "libfreetype.so"));
 
         return ok;
     }
