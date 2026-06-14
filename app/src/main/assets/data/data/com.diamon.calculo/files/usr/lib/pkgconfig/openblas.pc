@@ -1,8 +1,8 @@
-libdir=/data/data/com.termux/files/home/fake_root/data/data/com.diamon.calculo/files/usr/lib
+libdir=/data/data/com.diamon.calculo/files/usr/lib
 libprefix=
 libnamesuffix=
 libsuffix=
-includedir=/data/data/com.termux/files/home/fake_root/data/data/com.diamon.calculo/files/usr/include
+includedir=/data/data/com.diamon.calculo/files/usr/include
 omp_opt=
 openblas_config= USE_64BITINT= DYNAMIC_ARCH=1 DYNAMIC_OLDER= NO_CBLAS= NO_LAPACK= NO_LAPACKE= NO_AFFINITY=1 USE_OPENMP= ARMV8 MAX_THREADS=8
 version=0.3.33.dev

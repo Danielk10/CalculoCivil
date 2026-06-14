@@ -57,7 +57,7 @@ TCL_SHLIB_CFLAGS='-fPIC'
 TCL_CFLAGS_WARNING='-Wall -Wpointer-arith'
 
 # Extra flags to pass to cc:
-TCL_EXTRA_CFLAGS='-fPIC -fPIE -Oz -pipe -I/data/data/com.termux/files/usr/include'
+TCL_EXTRA_CFLAGS='-fPIC -fPIE -Oz -pipe -I/data/data/com.diamon.calculo/files/usr/include'
 
 # Base command to use for combining object files into a shared library:
 TCL_SHLIB_LD='${CC} ${CFLAGS} ${LDFLAGS} -shared'
@@ -79,7 +79,7 @@ TCL_DL_LIBS='-ldl'
 
 # Flags to pass to the compiler when linking object files into
 # an executable tclsh or tcltest binary.
-TCL_LD_FLAGS='-pie -Wl,-z,max-page-size=16384 -L/data/data/com.termux/files/usr/lib -Wl,--export-dynamic '
+TCL_LD_FLAGS='-pie -Wl,-z,max-page-size=16384 -L/data/data/com.diamon.calculo/files/usr/lib -Wl,--export-dynamic '
 
 # Flags to pass to cc/ld, such as "-R /usr/local/tcl/lib", that tell the
 # run-time dynamic linker where to look for shared libraries such as
