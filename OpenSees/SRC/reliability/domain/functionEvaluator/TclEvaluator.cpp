@@ -47,7 +47,7 @@
 TclEvaluator::TclEvaluator(Tcl_Interp *passedTclInterp,
 			   ReliabilityDomain *passedReliabilityDomain,
 			   Domain *passedOpenSeesDomain,
-			   TCL_Char *passed_fileName)
+			   const TCL_Char *passed_fileName)
   :FunctionEvaluator(), theTclInterp(passedTclInterp), theReliabilityDomain(passedReliabilityDomain),
    theOpenSeesDomain(passedOpenSeesDomain)
   

@@ -55,7 +55,7 @@ public:
                  FunctionEvaluator *theGFunEvaluator,
                  GradientEvaluator *theGradGEvaluator,
                  Tcl_Interp *theTclInterp,
-                 TCL_Char *fileName);
+                 const TCL_Char *fileName);
 	~FOSMAnalysis();
 
 	int analyze(void);

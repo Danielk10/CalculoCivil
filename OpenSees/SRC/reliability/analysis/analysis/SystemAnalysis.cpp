@@ -57,7 +57,7 @@ using std::ios;
 
 SystemAnalysis::SystemAnalysis(ReliabilityDomain *passedReliabilityDomain, 
                                FunctionEvaluator *passedEvaluator, 
-                               TCL_Char *passedBeta, TCL_Char *passedRho)
+                               const TCL_Char *passedBeta, const TCL_Char *passedRho)
 	:ReliabilityAnalysis()
 {
 	theReliabilityDomain = passedReliabilityDomain;

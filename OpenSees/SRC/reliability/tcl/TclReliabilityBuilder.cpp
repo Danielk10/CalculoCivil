@@ -211,6 +211,11 @@ extern Integrator* theSensitivityIntegrator;
 /////E Modified by K Fujimura /////////////////////////////
 /////////////////////////////////////////////////////////
 
+#ifdef TCL_Char
+#undef TCL_Char
+#endif
+#define TCL_Char const char
+
 //
 // SOME STATIC POINTERS USED IN THE FUNCTIONS INVOKED BY THE INTERPRETER
 //

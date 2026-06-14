@@ -60,19 +60,18 @@ using std::setiosflags;
 
 
 FORMAnalysis::FORMAnalysis(ReliabilityDomain *passedReliabilityDomain,
-						   FindDesignPointAlgorithm *passedFindDesignPointAlgorithm,
-                           FunctionEvaluator *passedFunctionEvaluator,
-						   ProbabilityTransformation *passedProbabilityTransformation,
-						   TCL_Char *passedFileName, int p_relSensTag)
-:ReliabilityAnalysis()
+			     FindDesignPointAlgorithm *passedFindDesignPointAlgorithm,
+			     FunctionEvaluator *passedGFunEvaluator,
+			     ProbabilityTransformation *passedProbabilityTransformation,
+			     const TCL_Char *passedFileName,
+			     int passedRelSensTag)
+:ReliabilityAnalysis(), theReliabilityDomain(passedReliabilityDomain)
 {
-	theReliabilityDomain = passedReliabilityDomain;
 	theFindDesignPointAlgorithm = passedFindDesignPointAlgorithm;
-    theFunctionEvaluator			= passedFunctionEvaluator;
+	theFunctionEvaluator = passedGFunEvaluator;
 	theProbabilityTransformation = passedProbabilityTransformation;
 	strcpy(fileName,passedFileName);
-	relSensTag = p_relSensTag;
-    
+	relSensTag = passedRelSensTag;
     storage = 0;
     numLsf = 0;
 }

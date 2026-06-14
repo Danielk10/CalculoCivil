@@ -57,11 +57,11 @@ using std::setiosflags;
 
 
 FOSMAnalysis::FOSMAnalysis(ReliabilityDomain *passedReliabilityDomain,
-                           Domain *passedOpenSeesDomain,
-                           FunctionEvaluator *passedGFunEvaluator,
-                           GradientEvaluator *passedGradGEvaluator,
-                           Tcl_Interp *passedTclInterp,
-                           TCL_Char *passedFileName)
+			     Domain *passedOpenSeesDomain,
+			     FunctionEvaluator *passedGFunEvaluator,
+			     GradientEvaluator *passedGradGEvaluator,
+			     Tcl_Interp *passedTclInterp,
+			     const TCL_Char *passedFileName)
 :ReliabilityAnalysis(), theReliabilityDomain(passedReliabilityDomain), 
 theOpenSeesDomain(passedOpenSeesDomain)
 {

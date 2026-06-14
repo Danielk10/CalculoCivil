@@ -58,28 +58,30 @@ using std::setiosflags;
 
 
 ImportanceSamplingAnalysis::ImportanceSamplingAnalysis(ReliabilityDomain *passedReliabilityDomain,
-                                                       Domain *passedOpenSeesDomain,
-										ProbabilityTransformation *passedProbabilityTransformation,
-										FunctionEvaluator *passedGFunEvaluator,
-										RandomNumberGenerator *passedRandomNumberGenerator,
-							Tcl_Interp *passedInterp,
-							long int passedNumberOfSimulations,
-                            double passedTargetCOV, double passedSamplingStdv,
-							int passedPrintFlag, TCL_Char *passedFileName,
-							int passedAnalysisTypeTag)
+							   Domain *passedOpenSeesDomain,
+							   ProbabilityTransformation *passedProbabilityTransformation,
+							   FunctionEvaluator *passedGFunEvaluator,
+							   RandomNumberGenerator *passedRandomNumberGenerator,
+							   Tcl_Interp *passedInterp,
+							   long int passedNumberOfSimulations,
+							   double passedTargetCOV,
+							   double passedSamplingStdv,
+							   int passedPrintFlag,
+							   const TCL_Char *passedFileName,
+							   int passedAnalysisTypeTag)
 :ReliabilityAnalysis(), theReliabilityDomain(passedReliabilityDomain), 
 theOpenSeesDomain(passedOpenSeesDomain)
 {
-	theProbabilityTransformation = passedProbabilityTransformation;
-	theGFunEvaluator = passedGFunEvaluator;
-	theRandomNumberGenerator = passedRandomNumberGenerator;
-	interp = passedInterp;
-	numberOfSimulations = passedNumberOfSimulations;
-	targetCOV = passedTargetCOV;
-	samplingStdv = passedSamplingStdv;
-	printFlag = passedPrintFlag;
+	theProbabilityTransformation	= passedProbabilityTransformation;
+	theGFunEvaluator				= passedGFunEvaluator;
+	theRandomNumberGenerator		= passedRandomNumberGenerator;
+	interp							= passedInterp;
+	numberOfSimulations				= passedNumberOfSimulations;
+	targetCOV						= passedTargetCOV;
+	samplingStdv					= passedSamplingStdv;
+	printFlag						= passedPrintFlag;
 	strcpy(fileName,passedFileName);
-	analysisTypeTag = passedAnalysisTypeTag;
+	analysisTypeTag					= passedAnalysisTypeTag;
 }
 
 

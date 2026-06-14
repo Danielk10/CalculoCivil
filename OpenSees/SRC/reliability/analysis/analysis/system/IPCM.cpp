@@ -55,8 +55,8 @@ using std::setiosflags;
 #endif
 
 IPCM::IPCM(ReliabilityDomain *passedReliabilityDomain, FunctionEvaluator *passedEvaluator, 
-           TCL_Char *passedFileName, int aType, 
-           TCL_Char *passedBeta, TCL_Char *passedRho)
+           const TCL_Char *passedFileName, int aType, 
+           const TCL_Char *passedBeta, const TCL_Char *passedRho)
 	:SystemAnalysis(passedReliabilityDomain, passedEvaluator, passedBeta, passedRho)
 {
 	strcpy(fileName,passedFileName);
@@ -219,7 +219,7 @@ IPCM::IPCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 		return 1.0 - pcf;
 	} else {
 		
-		// ÑÑÑÑ FIRST CYCLE ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ 
+		// ï¿½ï¿½ï¿½ï¿½ FIRST CYCLE ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		double pdfc1 = uRV.getPDFvalue(rho(1-1,1-1)); 
 		double cdfc1 = uRV.getCDFvalue(rho(1-1,1-1)); 
 		double A1 = pdfc1/cdfc1;
@@ -254,7 +254,7 @@ IPCM::IPCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 				rho(ir-1,ic-1) = (rho(ir-1,ic-1) - rho(1-1,ir-1)*rho(1-1,ic-1)*B1)/sqrt((1 - rho(1-1,ir-1)*rho(1-1,ir-1)*B1)*(1 - rho(1-1,ic-1)*rho(1-1,ic-1)*B1));
 		}
 
-		// ÑÑÑÑ- OTHER CYCLES ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÐ 
+		// ï¿½ï¿½ï¿½ï¿½- OTHER CYCLES ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		for (j = 2; j <= n - 1; j++) {
 			pdfc1 = uRV.getPDFvalue(rho(j-1,j-2));
 			cdfc1 = uRV.getCDFvalue(rho(j-1,j-2)); 
@@ -290,7 +290,7 @@ IPCM::IPCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 			}
 		}
 
-		// ÑÑÑÐ Calculate the product of conditional marginals 
+		// ï¿½ï¿½ï¿½ï¿½ Calculate the product of conditional marginals 
 		double pf = log(uRV.getCDFvalue(rho(1-1,1-1))); 
 		for (i = 2; i<=n; i++)
 			pf = pf + log(uRV.getCDFvalue(rho(i-1,i-2)));

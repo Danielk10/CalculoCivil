@@ -64,7 +64,7 @@ OutCrossingAnalysis::OutCrossingAnalysis(
 				int p_sampleFreq,
 				int p_impulseFreq,
 				double p_littleDeltaT,
-				TCL_Char *passedFileName,
+				const TCL_Char *passedFileName,
 				double p_integralTolerance,
 				bool p_useFirstDesignPt)
 :ReliabilityAnalysis()

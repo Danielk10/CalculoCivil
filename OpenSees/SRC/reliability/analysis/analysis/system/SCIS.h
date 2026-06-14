@@ -44,9 +44,9 @@ class SCIS : public SystemAnalysis
 {
 
 public:
-	SCIS(ReliabilityDomain*, FunctionEvaluator*, 
-            TCL_Char*, int, TCL_Char*, TCL_Char*, 
-            long int Nmax = 1e4, double errMax = 1.0e-6);
+	SCIS(ReliabilityDomain*, FunctionEvaluator*,
+	const TCL_Char*, int, const TCL_Char*, const TCL_Char*,
+	long int Nmax = 1e4, double errMax = 1.0e-6);
 	~SCIS();
 
 	int		analyze(void);

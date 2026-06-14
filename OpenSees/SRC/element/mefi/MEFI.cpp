@@ -808,9 +808,9 @@ Response* MEFI::setResponse(const char **argv, int argc, OPS_Stream &output)
  
   //material output
   else if (strcmp(argv[0], "material") == 0 || strcmp(argv[0], "integrPoint") == 0 ||
-			strcmp(argv[0], "Material") == 0 || strcmp(argv[0], "IntegrPoint") == 0 ||
-			strcmp(argv[0], "RCpanel") == 0 || strcmp(argv[0], "RCPanel") || 
-			strcmp(argv[0], "RC_panel") || strcmp(argv[0], "RC_Panel") == 0) {
+  strcmp(argv[0], "Material") == 0 || strcmp(argv[0], "IntegrPoint") == 0 ||
+  strcmp(argv[0], "RCpanel") == 0 || strcmp(argv[0], "RCPanel") == 0 ||
+  strcmp(argv[0], "RC_panel") == 0 || strcmp(argv[0], "RC_Panel") == 0) {
 
 	  //check if correct # of arguments passed
 	  if (argc < 3) {

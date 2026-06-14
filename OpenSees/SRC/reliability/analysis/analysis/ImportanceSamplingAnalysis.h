@@ -58,7 +58,7 @@ public:
 				   double passedTargetCOV,
 				   double samplingStdv,
 				   int printFlag,
-				   TCL_Char *fileName,
+				   const TCL_Char *fileName,
 				   int analysisTypeTag);
 	
 	~ImportanceSamplingAnalysis();

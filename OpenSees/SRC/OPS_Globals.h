@@ -51,12 +51,14 @@ extern OPS_Stream *opserrPtr;
 
 enum NodeResponseType { Disp = 1, Vel = 2, Accel =3, IncrDisp =4, IncrDeltaDisp =5, Reaction =6, Unbalance =7, RayleighForces =8};
 
+#ifndef TCL_Char
 #ifdef _TCL85
 #define TCL_Char const char
 #elif _TCL84
 #define TCL_Char const char
 #else
 #define TCL_Char char
+#endif
 #endif
 
 class Domain;

@@ -51,7 +51,7 @@ public:
                  FunctionEvaluator *passedEvaluator,
                  FORMAnalysis *passedFORM,
                  FindCurvatures *passedCurvaturesAlgorithm,
-                 TCL_Char *fileName);
+                 const TCL_Char *fileName);
 	~SORMAnalysis();
 
 	int analyze(void);

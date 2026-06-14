@@ -46,8 +46,8 @@ class IPCM : public SystemAnalysis
 public:
 	IPCM(ReliabilityDomain *passedReliabilityDomain,
                 FunctionEvaluator *passedEvaluator,
-                TCL_Char *fileName, int analysisType, 
-                TCL_Char *betaName, TCL_Char *rhoName);
+                const TCL_Char *fileName, int analysisType, 
+                const TCL_Char *betaName, const TCL_Char *rhoName);
 	~IPCM();
 
 	int		analyze(void);

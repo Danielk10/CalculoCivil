@@ -59,8 +59,8 @@ using std::setiosflags;
 #include <time.h>
 
 SCIS::SCIS(ReliabilityDomain *passedReliabilityDomain, FunctionEvaluator *passedEvaluator, 
-           TCL_Char *passedFileName, int aType, 
-           TCL_Char *passedBeta, TCL_Char *passedRho, long int passedN, double passedTol)
+           const TCL_Char *passedFileName, int aType, 
+           const TCL_Char *passedBeta, const TCL_Char *passedRho, long int passedN, double passedTol)
 	:SystemAnalysis(passedReliabilityDomain, passedEvaluator, passedBeta, passedRho)
 {
 	strcpy(fileName,passedFileName);

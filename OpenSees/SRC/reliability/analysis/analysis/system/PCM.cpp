@@ -51,8 +51,8 @@ using std::setiosflags;
 
 
 PCM::PCM(ReliabilityDomain *passedReliabilityDomain, FunctionEvaluator *passedEvaluator, 
-         TCL_Char *passedFileName, int aType, 
-		 TCL_Char *passedBeta, TCL_Char *passedRho)
+         const TCL_Char *passedFileName, int aType, 
+         const TCL_Char *passedBeta, const TCL_Char *passedRho)
 	:SystemAnalysis(passedReliabilityDomain, passedEvaluator, passedBeta, passedRho)
 
 {
@@ -212,7 +212,7 @@ PCM::PCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 		return pcf;
 	} else {
 	
-		// ÑÑÑÑ FIRST CYCLE ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ 
+		// ï¿½ï¿½ï¿½ï¿½ FIRST CYCLE ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		double A1 = uRV.getPDFvalue(rho(1-1,1-1))/(uRV.getCDFvalue(rho(1-1,1-1)));
 		double B1 = A1*(rho(1-1,1-1) + A1);
 		for (k = 2; k <= n; k++) 
@@ -223,7 +223,7 @@ PCM::PCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 				rho(ir-1,ic-1) = (rho(ir-1,ic-1) - rho(1-1,ir-1)*rho(1-1,ic-1)*B1)/sqrt((1-rho(1-1,ir-1)*rho(1-1,ir-1)*B1)*(1 - rho(1-1,ic-1)*rho(1-1,ic-1)*B1));
 		}
 
-		// ÑÑÑÑ- OTHER CYCLES ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÐ 
+		// ï¿½ï¿½ï¿½ï¿½- OTHER CYCLES ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		for (j = 2; j <= n - 1; j++) {
 			A1 = uRV.getPDFvalue(rho(j-1,j-2))/(uRV.getCDFvalue(rho(j-1,j-2)));
 			B1 = A1*(rho(j-1,j-2) + A1);
@@ -236,7 +236,7 @@ PCM::PCMfunc(const Vector &allbeta, const Matrix &rhoin, double modifier)
 			}
 		}
 
-		// ÑÑÑÐ Calculate the product of conditional marginals 
+		// ï¿½ï¿½ï¿½ï¿½ Calculate the product of conditional marginals 
 		double pf = log(uRV.getCDFvalue(rho(1-1,1-1))); 
 		for (i = 2; i<=n; i++)
 			pf = pf + log(uRV.getCDFvalue(rho(i-1,i-2)));

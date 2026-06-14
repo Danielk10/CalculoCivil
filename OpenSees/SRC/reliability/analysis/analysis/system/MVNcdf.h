@@ -44,10 +44,10 @@ class MVNcdf : public SystemAnalysis
 {
 
 public:
-	MVNcdf(ReliabilityDomain*, 
-           FunctionEvaluator*,
-           TCL_Char*, int, TCL_Char*, TCL_Char*, 
-           long int Nmax = 2e5, double errMax = 1.0e-6);
+	MVNcdf(ReliabilityDomain*,
+	FunctionEvaluator*,
+	const TCL_Char*, int, const TCL_Char*, const TCL_Char*,
+	long int Nmax = 2e5, double errMax = 1.0e-6);
 	~MVNcdf();
 
 	int		analyze(void);

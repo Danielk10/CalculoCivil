@@ -60,7 +60,7 @@ public:
 		      int sampleFreq,
 		      int impulseFreq,
 		      double littleDeltaT,
-		      TCL_Char * FileName,
+		      const TCL_Char * FileName,
 		      double integralTolerance,
 		      bool useFirstDesignPt);
   ~OutCrossingAnalysis();

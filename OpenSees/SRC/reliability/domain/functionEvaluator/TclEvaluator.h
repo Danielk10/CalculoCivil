@@ -45,9 +45,9 @@ class TclEvaluator : public FunctionEvaluator
 {
  public:
 	TclEvaluator(Tcl_Interp *passedTclInterp,
-		   ReliabilityDomain *passedReliabilityDomain,
-		   Domain *passedOpenSeesDomain,
-		   TCL_Char *fileName);
+				   ReliabilityDomain *passedReliabilityDomain,
+				   Domain *passedOpenSeesDomain,
+				   const TCL_Char *fileName);
 	TclEvaluator(Tcl_Interp *passedTclInterp,
 				 ReliabilityDomain *passedReliabilityDomain,
 				 Domain *passedOpenSeesDomain);

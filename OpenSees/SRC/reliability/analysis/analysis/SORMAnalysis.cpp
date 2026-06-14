@@ -54,16 +54,15 @@ using std::setiosflags;
 
 
 SORMAnalysis::SORMAnalysis(ReliabilityDomain *passedReliabilityDomain,
-                           FunctionEvaluator *passedEvaluator,
-                           FORMAnalysis *passedFORM,
-                           FindCurvatures *passedCurvaturesAlgorithm,
-                           TCL_Char *passedFileName)
-:ReliabilityAnalysis()
+			     FunctionEvaluator *passedEvaluator,
+			     FORMAnalysis *passedFORM,
+			     FindCurvatures *passedCurvaturesAlgorithm,
+			     const TCL_Char *passedFileName)
+:ReliabilityAnalysis(), theReliabilityDomain(passedReliabilityDomain)
 {
-	theReliabilityDomain = passedReliabilityDomain;
-    theFunctionEvaluator = passedEvaluator;
-    theFORManalysis = passedFORM;
-	theCurvaturesAlgorithm = passedCurvaturesAlgorithm;
+	theFunctionEvaluator	= passedEvaluator;
+	theFORManalysis			= passedFORM;
+	theCurvaturesAlgorithm  = passedCurvaturesAlgorithm;
 	strcpy(fileName,passedFileName);
 }
 
