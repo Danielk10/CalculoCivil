@@ -127,6 +127,13 @@ public class AssetHelper {
         ok &= linkTool(new File(usrLib, "libtcl8.6.so"), new File(nativeLibDir, "libtcl8_6.so"));
         ok &= linkTool(new File(usrLib, "libtk8.6.so"), new File(nativeLibDir, "libtk8_6.so"));
 
+        // System libraries that might be expected with specific versions
+        File systemLibZ = new File("/system/lib64/libz.so");
+        if (!systemLibZ.exists()) {
+            systemLibZ = new File("/system/lib/libz.so");
+        }
+        ok &= linkTool(new File(usrLib, "libz.so.1"), systemLibZ);
+
         return ok;
     }
 
