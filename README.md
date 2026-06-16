@@ -90,7 +90,7 @@ Para garantizar la integridad de las licencias, el proyecto se estructura bajo u
 
 ***
 
-## 🚫 Lo que NO haré (para cumplir con la licencia)
+## 🚫 Lo que NO haré
 
 Para evitar violación de la licencia de OpenSees, **NO**:
 
@@ -102,7 +102,7 @@ Para evitar violación de la licencia de OpenSees, **NO**:
 
 ***
 
-## ✅ Lo que VOY a hacer (para cumplir con la licencia)
+## ✅ Lo que VOY a hacer
 
 - ✅ Mantener este proyecto como **uso interno exclusivo** (sin redistribución).
 - ✅ Documentar claramente que es **para investigación personal y uso no comercial**.
@@ -172,6 +172,6 @@ chmod +x setup-sdk.sh
 
 ## Autor
 
-**Daniel Elias Diamon Vazquez**
-Valencia, Carabobo, Venezuela
+**Daniel Diamon**
+Tinaquillo, Cojedes, Venezuela
 Desarrollador independiente
