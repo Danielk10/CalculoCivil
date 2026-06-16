@@ -1,6 +1,6 @@
-# Plan de Optimización: Infraestructura Runtime (CalculoCivil)
+# Plan de Optimización: Infraestructura Runtime (Structural and Seismic Research)
 
-Este documento detalla las mejoras sugeridas para alinear la robustez técnica de **CalculoCivil** con los estándares implementados en **Flash-EEPROM-Tool**.
+Este documento detalla las mejoras sugeridas para alinear la robustez técnica de **Structural and Seismic Research** con los estándares implementados en **Flash-EEPROM-Tool**.
 
 ## 1. Automatización de Enlaces (Mapeo Inteligente)
 **Problema actual:** En `AssetHelper.java`, los enlaces simbólicos se crean manualmente línea por línea (ej. `libz.so.1` -> `libz_so_1.so`).
@@ -38,4 +38,4 @@ Este documento detalla las mejoras sugeridas para alinear la robustez técnica d
 
 ---
 **Veredicto de Consistencia:**
-El patrón de diseño actual en **CalculoCivil** es **Correcto y Válido**. Estas sugerencias son optimizaciones de "calidad de vida" y robustez que harán el mantenimiento a largo plazo mucho más sencillo, siguiendo el éxito ya comprobado en tus otros proyectos.
+El patrón de diseño actual en **Structural and Seismic Research** es **Correcto y Válido**. Estas sugerencias son optimizaciones de "calidad de vida" y robustez que harán el mantenimiento a largo plazo mucho más sencillo, siguiendo el éxito ya comprobado en tus otros proyectos.

@@ -1,6 +1,6 @@
-# CalculoCivil
+# Structural and Seismic Research
 
-**CalculoCivil** es una aplicación de cálculo estructural para Android, basada en el potente motor de simulación **OpenSees** utilizando la interfaz de desarrollo nativo de Android (**NDK**) con integración **Java y C++ (JNI)**.
+**Structural and Seismic Research** es una aplicación de cálculo estructural para Android, basada en el potente motor de simulación **OpenSees** utilizando la interfaz de desarrollo nativo de Android (**NDK**) con integración **Java y C++ (JNI)**.
 
 ---
 
@@ -164,8 +164,8 @@ chmod +x setup-sdk.sh
 ---
 
 ## 📚 Documentación Adicional
-- **[guia_desarrollo_calculocivil.md](guia_desarrollo_calculocivil.md)**
-- **[resumen_proyecto_calculocivil.md](resumen_proyecto_calculocivil.md)**
+- **[guia_desarrollo_structural_seismic_research.md](guia_desarrollo_structural_seismic_research.md)**
+- **[resumen_proyecto_structural_seismic_research.md](resumen_proyecto_structural_seismic_research.md)**
 - **[guia_uso_sdk.md](guia_uso_sdk.md)**
 
 ---

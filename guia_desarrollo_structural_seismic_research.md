@@ -1,6 +1,6 @@
-# Guía de Desarrollo para CalculoCivil (Android Native C++)
+# Guía de Desarrollo para Structural and Seismic Research (Android Native C++)
 
-Esta guía explica los pasos para compilar, instalar y desarrollar en el proyecto **CalculoCivil** desde la línea de comandos en Linux.
+Esta guía explica los pasos para compilar, instalar y desarrollar en el proyecto **Structural and Seismic Research** desde la línea de comandos en Linux.
 
 ## 1. Configuración Inicial del Entorno
 
@@ -69,4 +69,4 @@ Para añadir lógica de cálculo estructurado de **OpenSees**:
 2. Agrega las rutas de inclusión para poder usar el código de OpenSees en el backend nativo.
 
 ---
-*Guía del Desarrollador para CalculoCivil*
+*Guía del Desarrollador para Structural and Seismic Research*

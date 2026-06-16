@@ -1,12 +1,12 @@
-# Resumen del Proyecto CalculoCivil
+# Resumen del Proyecto Structural and Seismic Research
 
-Este documento resume la estructura y configuración actual del proyecto Android con soporte nativo C++ **CalculoCivil**.
+Este documento resume la estructura y configuración actual del proyecto Android con soporte nativo C++ **Structural and Seismic Research**.
 
 ## Ficha Técnica del Proyecto
 
 | Parámetro | Valor |
 | :--- | :--- |
-| **Nombre del Proyecto** | CalculoCivil |
+| **Nombre del Proyecto** | Structural and Seismic Research |
 | **Package Name / Application ID** | `com.diamon.calculo` |
 | **Librería Nativa** | `calculocivil` (compilada como `libcalculocivil.so`) |
 | **Compile SDK** | 37 (Android 15+) |
@@ -25,7 +25,7 @@ Este documento resume la estructura y configuración actual del proyecto Android
 
 - **Script de Instalación SDK**: [setup-sdk.sh](file:///home/danielpdiamon/CalculoCivil/setup-sdk.sh)
 - **Guía de Uso del SDK**: [guia_uso_sdk.md](file:///home/danielpdiamon/CalculoCivil/guia_uso_sdk.md)
-- **Guía del Proyecto**: [guia_desarrollo_calculocivil.md](file:///home/danielpdiamon/CalculoCivil/guia_desarrollo_calculocivil.md)
+- **Guía del Proyecto**: [guia_desarrollo_structural_seismic_research.md](file:///home/danielpdiamon/CalculoCivil/guia_desarrollo_structural_seismic_research.md)
 
 ---
-*Configurado y Adaptado para CalculoCivil*
+*Configurado y Adaptado para Structural and Seismic Research*

@@ -1,4 +1,4 @@
-# Dependencias de Binarios (CalculoCivil)
+# Dependencias de Binarios (Structural and Seismic Research)
 
 Este documento lista las dependencias y la matriz de renombrado entre la versión original y la versión de Android JNI.
 

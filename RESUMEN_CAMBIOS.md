@@ -1,4 +1,4 @@
-# Resumen de Cambios CalculoCivil - Integración OpenSees
+# Resumen de Cambios Structural and Seismic Research - Integración OpenSees
 
 ## ¿Qué se hizo?
 

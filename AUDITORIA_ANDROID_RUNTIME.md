@@ -1,4 +1,4 @@
-# Auditoría Android Runtime (CalculoCivil)
+# Auditoría Android Runtime (Structural and Seismic Research)
 
 Este documento explica cómo se configuró el proyecto para que los binarios nativos de OpenSees cumplan con las políticas de Google Play.
 
