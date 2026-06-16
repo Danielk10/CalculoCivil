@@ -48,7 +48,7 @@ Este proyecto integra las siguientes librerías de código abierto. Todas tienen
 
 ***
 
-## 🔒 Licencia de OpenSees (Texto Completo)
+## 🔒 Licencia de OpenSees
 
 El código de OpenSees incluido en este repositorio se mantiene bajo la **licencia oficial de UC Berkeley**:
 
@@ -80,7 +80,7 @@ University of California, Berkeley
 
 ***
 
-## 🏗️ Separación Arquitectónica (Technical Separation)
+## 🏗️ Separación Arquitectónica
 
 Para garantizar la integridad de las licencias, el proyecto se estructura bajo una separación clara:
 
