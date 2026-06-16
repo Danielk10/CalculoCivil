@@ -44,7 +44,7 @@ Este proyecto integra las siguientes librerías de código abierto. Todas tienen
 | **SuperLU** | Solución de sistemas lineales dispersos | **BSD-like** | [http://superlu.cs.lbl.gov](http://superlu.cs.lbl.gov) |
 | **UMFPACK** | Factorización LU dispersa | **GPL** | [http://www.cise.ufl.edu/research/sparse/umfpack](http://www.cise.ufl.edu/research/sparse/umfpack) |
 | **HDF5** | I/O de datos científicos | **BSD-like** | [https://www.hdfgroup.org](https://www.hdfgroup.org) |
-| **Mi código Android** | Aplicación Android NDK (C++/Fortran) | **Apache 2.0** | [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0) |
+| **Mi código Android** | Aplicación Android NDK (Java/C++) | **Apache 2.0** | [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0) |
 
 ***
 
