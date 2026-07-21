@@ -50,10 +50,11 @@ export CC=clang
 export CXX=clang++
 export FC=gfortran
 
-export COMMON_CFLAGS="-fPIC -fPIE -Oz -I$FAKE_USR/include -I$TMX_PREFIX/include -I$FAKE_USR/include/eigen3"
-export COMMON_CXXFLAGS="-fPIC -fPIE -Oz -std=c++17 -Wno-error -Wno-c++11-narrowing -Wno-deprecated-declarations -Wno-inconsistent-missing-override -I$FAKE_USR/include -I$TMX_PREFIX/include -I$FAKE_USR/include/eigen3"
-export COMMON_FFLAGS="-fPIC -fPIE -Oz -Wno-error"
-export COMMON_LDFLAGS="-pie -Wl,-z,max-page-size=16384 -L$FAKE_USR/lib -L$TMX_PREFIX/lib"
+export COMMON_CFLAGS="-fPIC -Oz -I$FAKE_USR/include -I$TMX_PREFIX/include -I$FAKE_USR/include/eigen3"
+export COMMON_CXXFLAGS="-fPIC -Oz -std=c++17 -Wno-error -Wno-c++11-narrowing -Wno-deprecated-declarations -Wno-inconsistent-missing-override -I$FAKE_USR/include -I$TMX_PREFIX/include -I$FAKE_USR/include/eigen3"
+export COMMON_FFLAGS="-fPIC -Oz -Wno-error"
+export EXE_LDFLAGS="-pie -Wl,-z,max-page-size=16384 -L$FAKE_USR/lib -L$TMX_PREFIX/lib"
+export SHARED_LDFLAGS="-Wl,-z,max-page-size=16384 -L$FAKE_USR/lib -L$TMX_PREFIX/lib"
 
 export PKG_CONFIG_PATH="$FAKE_USR/lib/pkgconfig:$TMX_PREFIX/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
 export CMAKE_PREFIX_PATH="$FAKE_USR;$TMX_PREFIX"
@@ -66,15 +67,16 @@ cmake .. \
   -DOPS_FINAL_TARGET=OpenSeesPy \
   -DCMAKE_INSTALL_PREFIX="$APP_PREFIX" \
   -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
   -DCMAKE_C_COMPILER="$CC" \
   -DCMAKE_CXX_COMPILER="$CXX" \
   -DCMAKE_Fortran_COMPILER="$FC" \
   -DCMAKE_C_FLAGS="$COMMON_CFLAGS" \
   -DCMAKE_CXX_FLAGS="$COMMON_CXXFLAGS" \
   -DCMAKE_Fortran_FLAGS="$COMMON_FFLAGS" \
-  -DCMAKE_EXE_LINKER_FLAGS="$COMMON_LDFLAGS" \
-  -DCMAKE_SHARED_LINKER_FLAGS="$COMMON_LDFLAGS" \
-  -DCMAKE_MODULE_LINKER_FLAGS="$COMMON_LDFLAGS" \
+  -DCMAKE_EXE_LINKER_FLAGS="$EXE_LDFLAGS" \
+  -DCMAKE_SHARED_LINKER_FLAGS="$SHARED_LDFLAGS" \
+  -DCMAKE_MODULE_LINKER_FLAGS="$SHARED_LDFLAGS" \
   -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
   -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE \
   -DCMAKE_INSTALL_RPATH="$APP_PREFIX/lib" \
