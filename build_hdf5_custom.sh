@@ -27,31 +27,6 @@ export SHARED_LDFLAGS="$BASE_LDFLAGS"
 export PKG_CONFIG_PATH="$FAKE_USR/lib/pkgconfig:$TMX_PREFIX/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
 
 # ==========================================
-# Compilación e instalación de libaec (SZIP)
-# ==========================================
-echo "=== Compilando libaec (soporte SZIP) ==="
-rm -rf "$HOME/libaec"
-git clone https://github.com/Deutsches-Klimarechenzentrum/libaec.git --depth 1
-cd "$HOME/libaec" || exit 1
-
-mkdir -p build && cd build || exit 1
-rm -rf ./*
-
-cmake .. \
-  -G "Unix Makefiles" \
-  -DCMAKE_INSTALL_PREFIX="$APP_PREFIX" \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_C_COMPILER="$CC" \
-  -DCMAKE_C_FLAGS="$COMMON_CFLAGS $COMMON_CPPFLAGS" \
-  -DCMAKE_EXE_LINKER_FLAGS="$EXE_LDFLAGS" \
-  -DCMAKE_SHARED_LINKER_FLAGS="$SHARED_LDFLAGS" \
-  -DBUILD_SHARED_LIBS=ON \
-  -DBUILD_TESTING=OFF
-
-cmake --build . --parallel "$(nproc)"
-DESTDIR="$DESTDIR" cmake --install .
-
-# ==========================================
 # Compilación e instalación de HDF5
 # ==========================================
 echo "=== Compilando HDF5 ==="
@@ -88,12 +63,9 @@ cmake .. \
   -DHDF5_BUILD_JAVA=OFF \
   -DHDF5_BUILD_HL_LIB=ON \
   -DHDF5_ENABLE_PARALLEL=OFF \
-  -DHDF5_ENABLE_Z_LIB_SUPPORT=ON \
   -DHDF5_ENABLE_ZLIB_SUPPORT=ON \
   -DHDF5_ENABLE_SZIP_SUPPORT=ON \
-  -DSZIP_INCLUDE_DIR="$FAKE_USR/include" \
-  -DSZIP_LIBRARY_RELEASE="$FAKE_USR/lib/libsz.so" \
-  -DSZIP_LIBRARY="$FAKE_USR/lib/libsz.so" \
+  -DSZIP_DIR="$FAKE_USR" \
   -DZLIB_INCLUDE_DIR="$TMX_PREFIX/include" \
   -DZLIB_LIBRARY_RELEASE="$TMX_PREFIX/lib/libz.so" \
   -DZLIB_LIBRARY="$TMX_PREFIX/lib/libz.so"
@@ -107,12 +79,6 @@ DESTDIR="$DESTDIR" cmake --install .
 echo "=== Verificando instalación de HDF5 ==="
 ls -lh "$FAKE_USR/lib/libhdf5.so"
 ls -lh "$FAKE_USR/lib/libhdf5_hl.so"
-find "$FAKE_USR/include" \( -name 'hdf5.h' -o -name 'H5public.h' \) | sort | head -n 20
-
-echo
-echo "=== Verificando libaec / szip ==="
-ls -lh "$FAKE_USR/lib/libaec.so"
-ls -lh "$FAKE_USR/lib/libsz.so"
 
 echo
 echo "=== Verificando enlace de HDF5 ==="
@@ -123,12 +89,5 @@ echo "=== Verificando enlace de HDF5 con libsz ==="
 readelf -d "$FAKE_USR/lib/libhdf5.so" | grep -E -i "libsz|libaec" || echo "Aviso: SZIP no aparece en las dependencias."
 
 echo
-echo "=== Verificando soporte de compresión zlib ==="
-readelf -d "$FAKE_USR/lib/libhdf5.so" | grep -i libz || echo "Aviso: libz.so no aparece como dependencia; soporte de compresión zlib no activo."
-
-echo
 echo "=== Alineación a 16KB de segmentos ELF (HDF5) ==="
 readelf -l "$FAKE_USR/lib/libhdf5.so" | grep LOAD
-echo
-echo "=== Alineación a 16KB de segmentos ELF (libsz) ==="
-readelf -l "$FAKE_USR/lib/libsz.so" | grep LOAD
