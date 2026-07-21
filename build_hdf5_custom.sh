@@ -68,10 +68,7 @@ cmake .. \
   -DZLIB_LIBRARY_RELEASE="$TMX_PREFIX/lib/libz.so" \
   -DZLIB_LIBRARY="$TMX_PREFIX/lib/libz.so" \
   -DHDF5_ENABLE_SZIP_SUPPORT=ON \
-  -DHDF5_ENABLE_SZIP_ENCODING=ON \
-  -DSZIP_INCLUDE_DIR="$FAKE_USR/include" \
-  -DSZIP_LIBRARY_RELEASE="$FAKE_USR/lib/libsz.so" \
-  -DSZIP_LIBRARY="$FAKE_USR/lib/libsz.so"
+  -DHDF5_ENABLE_SZIP_ENCODING=ON
 
 cmake --build . --parallel "$(nproc)"
 DESTDIR="$DESTDIR" cmake --install .
