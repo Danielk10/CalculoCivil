@@ -55,6 +55,8 @@ cmake .. \
   -DCMAKE_INSTALL_RPATH="$APP_PREFIX/lib" \
   -DTCL_INCLUDE_PATH="$FAKE_USR/include" \
   -DTCL_LIBRARY="$FAKE_USR/lib/libtcl8.6.so" \
+  -DTK_INCLUDE_PATH="$FAKE_USR/include" \
+  -DTK_LIBRARY="$FAKE_USR/lib/libtk8.6.so" \
   -DPython_EXECUTABLE="$PY_EXE" \
   -DPython_INCLUDE_DIR="$PY_INC" \
   -DPython_LIBRARY="$PY_LIB" \
