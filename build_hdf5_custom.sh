@@ -64,11 +64,14 @@ cmake .. \
   -DHDF5_BUILD_HL_LIB=ON \
   -DHDF5_ENABLE_PARALLEL=OFF \
   -DHDF5_ENABLE_ZLIB_SUPPORT=ON \
-  -DHDF5_ENABLE_SZIP_SUPPORT=ON \
-  -DSZIP_ROOT="$FAKE_USR" \
   -DZLIB_INCLUDE_DIR="$TMX_PREFIX/include" \
   -DZLIB_LIBRARY_RELEASE="$TMX_PREFIX/lib/libz.so" \
-  -DZLIB_LIBRARY="$TMX_PREFIX/lib/libz.so"
+  -DZLIB_LIBRARY="$TMX_PREFIX/lib/libz.so" \
+  -DHDF5_ENABLE_SZIP_SUPPORT=ON \
+  -DHDF5_ENABLE_SZIP_ENCODING=ON \
+  -DSZIP_INCLUDE_DIR="$FAKE_USR/include" \
+  -DSZIP_LIBRARY_RELEASE="$FAKE_USR/lib/libsz.so" \
+  -DSZIP_LIBRARY="$FAKE_USR/lib/libsz.so"
 
 cmake --build . --parallel "$(nproc)"
 DESTDIR="$DESTDIR" cmake --install .
