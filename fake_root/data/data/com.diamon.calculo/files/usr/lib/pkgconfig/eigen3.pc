@@ -1,0 +1,7 @@
+prefix=/data/data/com.diamon.calculo/files/usr
+includedir=${prefix}/include/eigen3
+
+Name: Eigen3
+Description: A C++ template library for linear algebra
+Version: 3.4.0
+Cflags: -I${includedir}
