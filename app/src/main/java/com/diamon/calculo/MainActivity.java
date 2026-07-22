@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
             updateNodeList();
             clearNodeInputs();
+            updateRendererModel();
             Toast.makeText(this, "Node " + id + " added", Toast.LENGTH_SHORT).show();
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid input values", Toast.LENGTH_SHORT).show();
@@ -281,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
         renderer = glSurfaceView.getStructuralRenderer();
         binding.containerGL.addView(glSurfaceView);
         glInitialized = true;
+        updateRendererModel();
     }
 
     // ==================== TAB 3: TERMINAL ====================
@@ -420,6 +422,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ==================== HELPERS ====================
+
+    private void updateRendererModel() {
+        if (renderer == null || glSurfaceView == null) return;
+        
+        int nNodes = model.getNodes().size();
+        int nElems = model.getElements().size();
+        
+        float[] nodePos = new float[nNodes * 3];
+        float[] nodeCol = new float[nNodes * 4];
+        
+        int i = 0, c = 0;
+        for (StructuralNode node : model.getNodes()) {
+            nodePos[i++] = (float) node.x;
+            nodePos[i++] = (float) node.y;
+            nodePos[i++] = (float) node.z;
+            nodeCol[c++] = 1.0f; nodeCol[c++] = 0.5f; nodeCol[c++] = 0.0f; nodeCol[c++] = 1.0f;
+        }
+        
+        float[] elemPos = new float[nElems * 2 * 3];
+        float[] elemCol = new float[nElems * 2 * 4];
+        
+        i = 0; c = 0;
+        for (FrameElement elem : model.getElements()) {
+            StructuralNode n1 = model.getNode(elem.nodeI);
+            StructuralNode n2 = model.getNode(elem.nodeJ);
+            if (n1 != null && n2 != null) {
+                elemPos[i++] = (float) n1.x; elemPos[i++] = (float) n1.y; elemPos[i++] = (float) n1.z;
+                elemPos[i++] = (float) n2.x; elemPos[i++] = (float) n2.y; elemPos[i++] = (float) n2.z;
+                for(int k=0; k<2; k++) {
+                    elemCol[c++] = 0.0f; elemCol[c++] = 0.8f; elemCol[c++] = 1.0f; elemCol[c++] = 1.0f;
+                }
+            }
+        }
+        
+        glSurfaceView.queueEvent(() -> {
+            renderer.setNodes(nodePos, nodeCol);
+            renderer.setElements(elemPos, elemCol);
+        });
+    }
 
     private double parseDouble(String text, double defaultValue) {
         if (text == null || text.trim().isEmpty()) return defaultValue;

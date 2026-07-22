@@ -168,6 +168,7 @@ public class LinuxTerminalView extends LinearLayout {
         if (commandListener != null) {
             commandListener.onCommand(cmd);
         }
+        etInput.requestFocus();
     }
 
     // ==================== Public API ====================

@@ -33,6 +33,13 @@ public class StructuralModel {
     public AnalysisResult getResult() { return result; }
     public void setResult(AnalysisResult result) { this.result = result; }
 
+    public StructuralNode getNode(int id) {
+        for (StructuralNode n : nodes) {
+            if (n.id == id) return n;
+        }
+        return null;
+    }
+
     // Add methods
     public void addNode(StructuralNode node) { nodes.add(node); }
     public void addElement(FrameElement element) { elements.add(element); }
