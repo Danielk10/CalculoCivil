@@ -555,7 +555,7 @@
                         android:background="#CC1C1C1E"
                         android:fontFamily="monospace"
                         android:padding="10dp"
-                        android:text="SAP2000 Structural Summary\nNodes: 0 | Elements: 0\nStatus: Ready"
+                        android:text="Cálculo Civil - Resumen Estructural\nNodes: 0 | Elements: 0\nStatus: Ready"
                         android:textColor="@color/terminal_green"
                         android:textSize="11sp" />
                 </FrameLayout>

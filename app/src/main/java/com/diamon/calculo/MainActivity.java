@@ -443,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
         executor.execute(() -> {
             PDFReportGenerator generator = new PDFReportGenerator();
             boolean success = generator.generateReport(this, model,
-                    "Análisis Estructural SAP2000", "Ingeniero Calculista", outputFile);
+                    "Análisis Estructural - Cálculo Civil", "Ingeniero Calculista", outputFile);
 
             mainHandler.post(() -> {
                 if (success) {
@@ -752,7 +752,7 @@ public class MainActivity extends AppCompatActivity {
         AnalysisResult res = model.getResult();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("SAP2000 Structural Summary\n");
+        sb.append("Cálculo Civil - Resumen Estructural\n");
         sb.append(String.format("Nodes: %d | Elements: %d\n", nodesCount, elemCount));
         if (res != null) {
             sb.append(String.format(Locale.US, "Max Disp: %.4e m\n", res.getMaxDisplacement()));

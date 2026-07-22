@@ -164,7 +164,7 @@ public class PDFReportGenerator {
 
     private void finishPage(PdfDocument document, Canvas canvas) {
         // Draw footer
-        String footer = String.format("Structural & Seismic Research v1.0 | Page %d", pageNumber);
+        String footer = String.format("Cálculo Civil v1.0 | OpenSees | Page %d", pageNumber);
         canvas.drawText(footer, MARGIN_LEFT, PAGE_HEIGHT - 20f, footerPaint);
 
         String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(new Date());
@@ -189,7 +189,7 @@ public class PDFReportGenerator {
         // Title block
         Paint bigTitle = new Paint(titlePaint);
         bigTitle.setTextSize(22f);
-        String title = "STRUCTURAL ANALYSIS REPORT";
+        String title = "REPORTE DE ANÁLISIS ESTRUCTURAL";
         float titleWidth = bigTitle.measureText(title);
         canvas.drawText(title, (PAGE_WIDTH - titleWidth) / 2f, y, bigTitle);
         y += 8f;
@@ -204,12 +204,12 @@ public class PDFReportGenerator {
 
         // Project info
         String[][] info = {
-                {"Project:", projectName != null ? projectName : "Untitled Project"},
-                {"Engineer:", engineerName != null ? engineerName : "N/A"},
-                {"Date:", new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date())},
-                {"Software:", "Structural & Seismic Research v1.0"},
-                {"Engine:", "OpenSees 3.8.0 (Pacific Earthquake Engineering Research Center)"},
-                {"Platform:", "Android NDK / ARM64-v8a"}
+                {"Proyecto:", projectName != null ? projectName : "Cálculo Civil - Proyecto"},
+                {"Ingeniero:", engineerName != null ? engineerName : "N/A"},
+                {"Fecha:", new SimpleDateFormat("dd 'de' MMMM, yyyy", Locale.getDefault()).format(new Date())},
+                {"Software:", "Cálculo Civil v1.0"},
+                {"Motor:", "OpenSees 3.8.0 (Pacific Earthquake Engineering Research Center)"},
+                {"Plataforma:", "Android NDK / ARM64-v8a"}
         };
 
         Paint labelPaint = new Paint(headerPaint);
@@ -235,17 +235,14 @@ public class PDFReportGenerator {
         noticePaint.setTextSize(9f);
         noticePaint.setColor(Color.GRAY);
         String[] notice = {
-                "OpenSees is developed by the Pacific Earthquake Engineering Research Center",
-                "(PEER) at the University of California, Berkeley.",
+                "Cálculo Civil es un desarrollo independiente para análisis y cálculo estructural.",
+                "Motor de análisis: OpenSees (PEER, University of California, Berkeley).",
                 "",
                 "Copyright (c) 1999-2024 The Regents of the University of California.",
-                "All Rights Reserved.",
+                "Todos los derechos reservados. Licencia BSD.",
                 "",
-                "This software is provided under the BSD license.",
-                "See http://www.berkeley.edu/OpenSees/copyright.html for details.",
-                "",
-                "DISCLAIMER: This report is generated for reference purposes only.",
-                "The engineer of record is responsible for verifying all results."
+                "DISCLAIMER: Este informe se genera con fines de cálculo y referencia.",
+                "El ingeniero proyectista/calculista es responsable de verificar todos los resultados."
         };
 
         for (String line : notice) {
