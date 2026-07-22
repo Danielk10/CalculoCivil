@@ -29,13 +29,13 @@ Este reporte documenta los pasos técnicos y el estado final de la instalación 
 Debido a que las librerías base compartidas del sistema Linux se pierden al reiniciar Cloud Shell, se ha creado un script automatizado para restaurarlas en segundos.
 
 ### 1. El script `preparar_opensees.sh`
-Este script se encuentra en `~/preparar_opensees.sh` (y hay una copia en `~/Descargas`). Su función es descargar e instalar rápidamente vía APT las librerías efímeras (liblapack, mkl, eigen, tcl, tk) que los binarios compilados de OpenSees exigen para poder funcionar. 
+Este script se encuentra en la raíz del repositorio (`~/CalculoCivil/preparar_opensees.sh`). Su función es descargar e instalar rápidamente vía APT las librerías efímeras (liblapack, mkl, eigen, tcl, tk) que los binarios compilados de OpenSees exigen para poder funcionar. 
 
 **Debe ejecutarse (con source) cada vez que abras una nueva sesión de Cloud Shell y desees hacer análisis.**
 
 ```bash
 # Ejecutar cada vez que inicies sesión:
-source ~/preparar_opensees.sh
+source ~/CalculoCivil/preparar_opensees.sh
 ```
 
 ### 2. Ejecutando OpenSees en Tcl
@@ -43,7 +43,7 @@ Con las dependencias cargadas, el comando `OpenSees` se encuentra globalmente di
 
 ```bash
 # Ejemplo:
-OpenSees ~/Descargas/test_opensees.tcl
+OpenSees ~/CalculoCivil/test_opensees.tcl
 ```
 
 ### 3. Ejecutando OpenSeesPy (Python)
@@ -54,7 +54,7 @@ Simplemente debes activar tu entorno permanente e importar la librería.
 source ~/opensees-env/bin/activate
 
 # Correr scripts de prueba
-python ~/Descargas/test_opensees.py
+python ~/CalculoCivil/test_opensees.py
 ```
 
 ---

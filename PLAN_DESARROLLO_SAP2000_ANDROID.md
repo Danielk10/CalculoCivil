@@ -99,7 +99,7 @@ Para validar los scripts Tcl y Python OpenSeesPy localmente en este entorno efí
 ### 4.1 Restaurar Dependencias del Sistema
 Dado que las librerías de sistema (como `libmkl`, `lapack`, `eigen`, `tcl`) se borran al reiniciar Cloud Shell, se debe ejecutar el script preparador cada vez que se inicie una nueva sesión:
 ```bash
-source ~/preparar_opensees.sh
+source ~/CalculoCivil/preparar_opensees.sh
 ```
 
 ### 4.2 Entorno Aislado de Python 3.11 y OpenSees

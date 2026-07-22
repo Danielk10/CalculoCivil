@@ -1,3 +1,71 @@
 <resources>
     <string name="app_name">Structural and Seismic Research</string>
+
+    <!-- Tabs -->
+    <string name="tab_model">Structural Model</string>
+    <string name="tab_viewer">3D Viewer</string>
+    <string name="tab_terminal">Terminal &amp; Log</string>
+
+    <!-- Structural Model Tab -->
+    <string name="card_nodes">Node &amp; Element Definition</string>
+    <string name="card_materials">Material &amp; Section</string>
+    <string name="card_loads">Load Patterns</string>
+    <string name="card_script">Script Editor</string>
+    <string name="btn_add_node">Add Node</string>
+    <string name="btn_add_element">Add Element</string>
+    <string name="btn_assign_material">Assign Material</string>
+    <string name="btn_apply_load">Apply Load</string>
+    <string name="btn_run_tcl">Run TCL</string>
+    <string name="btn_run_python">Run Python</string>
+    <string name="btn_import">Import</string>
+    <string name="btn_export">Export</string>
+    <string name="hint_node_id">Node ID</string>
+    <string name="hint_x">X (m)</string>
+    <string name="hint_y">Y (m)</string>
+    <string name="hint_z">Z (m)</string>
+    <string name="hint_elem_id">Element ID</string>
+    <string name="hint_node_i">Node I</string>
+    <string name="hint_node_j">Node J</string>
+    <string name="hint_e_modulus">E (kPa)</string>
+    <string name="hint_fy">fy (kPa)</string>
+    <string name="hint_nu">ν (Poisson)</string>
+    <string name="hint_fx">Fx (kN)</string>
+    <string name="hint_fy_load">Fy (kN)</string>
+    <string name="hint_fz">Fz (kN)</string>
+    <string name="hint_script">Enter TCL or Python script here…</string>
+
+    <!-- 3D Viewer Tab -->
+    <string name="btn_wireframe">Wireframe</string>
+    <string name="btn_extruded">Extruded</string>
+    <string name="btn_deformed">Deformed</string>
+    <string name="btn_mode_shapes">Mode Shapes</string>
+    <string name="btn_perspective">Perspective</string>
+    <string name="btn_orthographic">Orthographic</string>
+
+    <!-- Terminal Tab -->
+    <string name="btn_run_tcl_test">▶ Run TCL Test</string>
+    <string name="btn_run_py_test">▶ Run Python Test</string>
+    <string name="btn_export_pdf">📄 Export PDF</string>
+
+    <!-- Menu -->
+    <string name="menu_about">About</string>
+    <string name="menu_privacy">Privacy Policy</string>
+    <string name="menu_export_pdf">Export PDF Report</string>
+
+    <!-- Loading -->
+    <string name="loading_text">Preparing OpenSees binaries…</string>
+    <string name="loading_success">Binaries configured successfully</string>
+    <string name="loading_error">Error configuring binaries</string>
+
+    <!-- Material Types -->
+    <string name="mat_concrete_c30">Concrete C30/35</string>
+    <string name="mat_steel_a992">Steel A992</string>
+    <string name="mat_steel_a36">Steel A36</string>
+    <string name="mat_elastic">Elastic Isotropic</string>
+
+    <!-- Load Types -->
+    <string name="load_dead">Dead Load (DL)</string>
+    <string name="load_live">Live Load (LL)</string>
+    <string name="load_eqx">Earthquake X (EQX)</string>
+    <string name="load_eqy">Earthquake Y (EQY)</string>
 </resources>

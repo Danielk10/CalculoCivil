@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/surface_dark"
     tools:context=".MainActivity">
 
-    <!-- Pantalla de carga -->
+    <!-- ========== Loading Screen ========== -->
     <LinearLayout
         android:id="@+id/layoutLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:background="@color/surface_dark"
         android:visibility="visible">
 
         <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminateTint="@color/accent_blue" />
 
         <TextView
             android:id="@+id/tvLoadingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Preparando binarios..." />
+            android:text="@string/loading_text"
+            android:textColor="@color/on_surface"
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- UI Principal -->
+    <!-- ========== Main UI ========== -->
     <LinearLayout
         android:id="@+id/layoutMainUI"
         android:layout_width="match_parent"
@@ -35,119 +41,531 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <!-- Pestañas -->
-        <LinearLayout
+        <!-- Tab Layout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/surface_dark"
+            app:tabTextColor="@color/tab_unselected"
+            app:tabSelectedTextColor="@color/accent_blue"
+            app:tabIndicatorColor="@color/accent_blue"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:tabGravity="fill" />
 
-            <Button
-                android:id="@+id/btnTabBasic"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="UI Básica" />
-
-            <Button
-                android:id="@+id/btnTabConsole"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Consola TCL" />
-        </LinearLayout>
-
+        <!-- Tab Content Container -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
-            <!-- Tab UI Básica -->
-            <LinearLayout
-                android:id="@+id/layoutBasicUI"
+            <!-- ===== TAB 1: Structural Model ===== -->
+            <ScrollView
+                android:id="@+id/layoutStructuralModel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cálculo Civil - OpenSees (Básico)"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Prueba rápida para verificar enlaces:" />
-
-                <Button
-                    android:id="@+id/btnTestSum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Calcular 2 + 2 en OpenSees" />
-                    
-                <TextView
-                    android:id="@+id/tvBasicResult"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Tab Consola -->
-            <LinearLayout
-                android:id="@+id/layoutConsole"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:visibility="gone">
-
-                <ScrollView
-                    android:id="@+id/scrollLog"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="#EEE"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/tvLog"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="--- Consola OpenSees ---\nToque aquí para copiar el log.\n"
-                        android:textSize="12sp" />
-                </ScrollView>
+                android:visibility="visible"
+                android:padding="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/etCommand"
-                        android:layout_width="0dp"
+                    <!-- Card: Node Definition -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Comando TCL"
-                        android:inputType="textNoSuggestions" />
+                        android:layout_margin="4dp"
+                        app:cardBackgroundColor="@color/card_bg_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_nodes"
+                                android:textColor="@color/accent_blue"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="12dp">
+
+                                <EditText
+                                    android:id="@+id/etNodeId"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_node_id"
+                                    android:inputType="number"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etNodeX"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_x"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etNodeY"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_y"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etNodeZ"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_z"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <CheckBox
+                                android:id="@+id/cbFixed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fixed Support"
+                                android:textColor="@color/on_surface"
+                                android:buttonTint="@color/accent_blue"
+                                android:layout_marginTop="4dp" />
+
+                            <Button
+                                android:id="@+id/btnAddNode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/btn_add_node"
+                                android:layout_marginTop="8dp"
+                                android:backgroundTint="@color/accent_blue" />
+
+                            <TextView
+                                android:id="@+id/tvNodeList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="monospace"
+                                android:textColor="@color/on_surface_dim"
+                                android:textSize="11sp"
+                                android:text="No nodes defined yet." />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card: Material & Section -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardBackgroundColor="@color/card_bg_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_materials"
+                                android:textColor="@color/accent_blue"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/spinnerMaterial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:backgroundTint="@color/on_surface" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <EditText
+                                    android:id="@+id/etEModulus"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_e_modulus"
+                                    android:inputType="numberDecimal"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etFy"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_fy"
+                                    android:inputType="numberDecimal"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/btnAssignMaterial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/btn_assign_material"
+                                android:layout_marginTop="8dp"
+                                android:backgroundTint="@color/accent_blue" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card: Load Patterns -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardBackgroundColor="@color/card_bg_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_loads"
+                                android:textColor="@color/accent_blue"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/spinnerLoadType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:backgroundTint="@color/on_surface" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <EditText
+                                    android:id="@+id/etLoadNodeId"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_node_id"
+                                    android:inputType="number"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etFx"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_fx"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etFyLoad"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_fy_load"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etFzLoad"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/hint_fz"
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/btnApplyLoad"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/btn_apply_load"
+                                android:layout_marginTop="8dp"
+                                android:backgroundTint="@color/accent_orange" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card: Script Editor -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardBackgroundColor="@color/card_bg_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_script"
+                                android:textColor="@color/accent_blue"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/etScriptEditor"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@color/terminal_bg"
+                                android:fontFamily="monospace"
+                                android:gravity="top|start"
+                                android:hint="@string/hint_script"
+                                android:inputType="textMultiLine"
+                                android:scrollbars="vertical"
+                                android:textColor="@color/terminal_green"
+                                android:textColorHint="#336633"
+                                android:textSize="12sp"
+                                android:padding="12dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <Button
+                                    android:id="@+id/btnRunTcl"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_run_tcl"
+                                    android:backgroundTint="@color/accent_blue"
+                                    android:layout_marginEnd="4dp"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/btnRunPython"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_run_python"
+                                    android:backgroundTint="@color/accent_green"
+                                    android:layout_marginEnd="4dp"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/btnImport"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_import"
+                                    android:backgroundTint="@color/on_surface_dim"
+                                    android:layout_marginEnd="4dp"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/btnExport"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/btn_export"
+                                    android:backgroundTint="@color/on_surface_dim"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- ===== TAB 2: 3D Viewer ===== -->
+            <LinearLayout
+                android:id="@+id/layoutViewer3D"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:id="@+id/containerGL"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- Viewer Controls -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/card_bg_dark"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnWireframe"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="@string/btn_wireframe"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/accent_blue"
+                            android:layout_marginEnd="4dp" />
+
+                        <Button
+                            android:id="@+id/btnDeformed"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="@string/btn_deformed"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/accent_orange"
+                            android:layout_marginEnd="4dp" />
+
+                        <Button
+                            android:id="@+id/btnModeShapes"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="@string/btn_mode_shapes"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/accent_green" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/seekDeformScale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressTint="@color/accent_blue"
+                        android:thumbTint="@color/accent_blue" />
+
+                    <TextView
+                        android:id="@+id/tvScaleLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Deformation Scale: 1.0x"
+                        android:textColor="@color/on_surface_dim"
+                        android:textSize="11sp"
+                        android:gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ===== TAB 3: Terminal & Log ===== -->
+            <LinearLayout
+                android:id="@+id/layoutTerminal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Quick Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:background="@color/card_bg_dark">
 
                     <Button
-                        android:id="@+id/btnSend"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Enviar" />
+                        android:id="@+id/btnRunTclTest"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/btn_run_tcl_test"
+                        android:textSize="11sp"
+                        android:backgroundTint="@color/accent_blue"
+                        android:layout_marginEnd="4dp" />
+
+                    <Button
+                        android:id="@+id/btnRunPyTest"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/btn_run_py_test"
+                        android:textSize="11sp"
+                        android:backgroundTint="@color/accent_green"
+                        android:layout_marginEnd="4dp" />
+
+                    <Button
+                        android:id="@+id/btnExportPdf"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/btn_export_pdf"
+                        android:textSize="11sp"
+                        android:backgroundTint="@color/accent_orange" />
                 </LinearLayout>
+
+                <!-- Terminal Container -->
+                <FrameLayout
+                    android:id="@+id/containerTerminal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </FrameLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
