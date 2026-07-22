@@ -92,21 +92,28 @@ Integración mediante `android.graphics.pdf.PdfDocument` para generar memorias d
 
 ---
 
-## 🛠️ 4. Configuración del Entorno de Pruebas Local en Linux
+## 🛠️ 4. Configuración del Entorno de Pruebas Local en Linux (Cloud Shell)
 
-Para validar los scripts Tcl y Python OpenSeesPy localmente antes de empaquetarlos en la aplicación Android:
+Para validar los scripts Tcl y Python OpenSeesPy localmente en este entorno efímero (antes de empaquetarlos en la aplicación Android), se debe seguir este flujo para sortear la pérdida de dependencias al reiniciar la sesión:
 
-### 4.1 Entorno Aislado de Python 3.11
-- Compilado e instalado localmente en `$HOME/.local_python311` sin alterar el Python por defecto del sistema (`Python 3.12`).
-- Creación de entorno virtual `venv`:
-  ```bash
-  $HOME/.local_python311/bin/python3.11 -m venv $HOME/opensees_env
-  source $HOME/opensees_env/bin/activate
-  ```
+### 4.1 Restaurar Dependencias del Sistema
+Dado que las librerías de sistema (como `libmkl`, `lapack`, `eigen`, `tcl`) se borran al reiniciar Cloud Shell, se debe ejecutar el script preparador cada vez que se inicie una nueva sesión:
+```bash
+source ~/preparar_opensees.sh
+```
 
-### 4.2 Compilación Local de OpenSees y OpenSeesPy
-- Binario OpenSees Tcl compilado con parches de compatibilidad `TCL_Char` y Tcl 8.6.
-- Módulo `opensees.so` (OpenSeesPy) instalado en el `site-packages` de Python 3.11 local.
+### 4.2 Entorno Aislado de Python 3.11 y OpenSees
+- **Python 3.11** está aislado en un entorno virtual persistente en el directorio home (`~/opensees-env`).
+- **Binario Tcl:** Está compilado y guardado permanentemente en `~/.local/bin/OpenSees`. Se puede ejecutar con `OpenSees <script.tcl>`.
+- **OpenSeesPy:** El archivo `opensees.so` está instalado directamente en los *site-packages* del entorno virtual.
+
+Para realizar pruebas con Python:
+```bash
+# Activar entorno virtual
+source ~/opensees-env/bin/activate
+# Correr script en python
+python script.py
+```
 
 ---
 
