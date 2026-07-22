@@ -120,7 +120,7 @@ public class LinuxTerminalView extends LinearLayout {
 
         etInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND ||
-                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
                 submitCommand();
                 return true;
             }
@@ -168,7 +168,14 @@ public class LinuxTerminalView extends LinearLayout {
         if (commandListener != null) {
             commandListener.onCommand(cmd);
         }
-        etInput.requestFocus();
+        
+        etInput.postDelayed(() -> {
+            etInput.requestFocus();
+            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(etInput, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 100);
     }
 
     // ==================== Public API ====================

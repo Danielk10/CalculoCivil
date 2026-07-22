@@ -455,46 +455,50 @@
                     android:background="@color/card_bg_dark"
                     android:padding="8dp">
 
-                        <HorizontalScrollView
-                            android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <Button
+                            android:id="@+id/btnWireframe"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:scrollbars="none">
-                            
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                            android:layout_weight="1"
+                            android:text="@string/btn_wireframe"
+                            android:textSize="10sp"
+                            android:padding="4dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:backgroundTint="@color/accent_blue"
+                            android:layout_marginEnd="4dp" />
 
-                                <Button
-                                    android:id="@+id/btnWireframe"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/btn_wireframe"
-                                    android:textSize="12sp"
-                                    android:padding="8dp"
-                                    android:backgroundTint="@color/accent_blue"
-                                    android:layout_marginEnd="8dp" />
+                        <Button
+                            android:id="@+id/btnDeformed"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/btn_deformed"
+                            android:textSize="10sp"
+                            android:padding="4dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:backgroundTint="@color/accent_orange"
+                            android:layout_marginEnd="4dp" />
 
-                                <Button
-                                    android:id="@+id/btnDeformed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/btn_deformed"
-                                    android:textSize="12sp"
-                                    android:padding="8dp"
-                                    android:backgroundTint="@color/accent_orange"
-                                    android:layout_marginEnd="8dp" />
-
-                                <Button
-                                    android:id="@+id/btnModeShapes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/btn_mode_shapes"
-                                    android:textSize="12sp"
-                                    android:padding="8dp"
-                                    android:backgroundTint="@color/accent_green" />
-                            </LinearLayout>
-                        </HorizontalScrollView>
+                        <Button
+                            android:id="@+id/btnModeShapes"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/btn_mode_shapes"
+                            android:textSize="10sp"
+                            android:padding="4dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:backgroundTint="@color/accent_green" />
+                    </LinearLayout>
 
                     <SeekBar
                         android:id="@+id/seekDeformScale"
@@ -526,48 +530,52 @@
                 android:visibility="gone">
 
                 <!-- Quick Action Buttons -->
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:background="@color/card_bg_dark"
-                    android:scrollbars="none">
+                    android:padding="8dp"
+                    android:weightSum="3">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btnRunTclTest"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:layout_weight="1"
+                        android:text="@string/btn_run_tcl_test"
+                        android:textSize="10sp"
+                        android:padding="4dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:backgroundTint="@color/accent_blue"
+                        android:layout_marginEnd="4dp" />
 
-                        <Button
-                            android:id="@+id/btnRunTclTest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/btn_run_tcl_test"
-                            android:textSize="12sp"
-                            android:padding="8dp"
-                            android:backgroundTint="@color/accent_blue"
-                            android:layout_marginEnd="8dp" />
+                    <Button
+                        android:id="@+id/btnRunPyTest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/btn_run_py_test"
+                        android:textSize="10sp"
+                        android:padding="4dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:backgroundTint="@color/accent_green"
+                        android:layout_marginEnd="4dp" />
 
-                        <Button
-                            android:id="@+id/btnRunPyTest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/btn_run_py_test"
-                            android:textSize="12sp"
-                            android:padding="8dp"
-                            android:backgroundTint="@color/accent_green"
-                            android:layout_marginEnd="8dp" />
-
-                        <Button
-                            android:id="@+id/btnExportPdf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/btn_export_pdf"
-                            android:textSize="12sp"
-                            android:padding="8dp"
-                            android:backgroundTint="@color/accent_orange" />
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    <Button
+                        android:id="@+id/btnExportPdf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/btn_export_pdf"
+                        android:textSize="10sp"
+                        android:padding="4dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:backgroundTint="@color/accent_orange" />
+                </LinearLayout>
 
                 <!-- Terminal Container -->
                 <FrameLayout

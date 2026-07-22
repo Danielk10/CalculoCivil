@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         setupStructuralModelTab();
         setupViewerTab();
         setupTerminalTab();
+        preloadExample();
         checkAndLoadAssets();
     }
 
@@ -422,6 +423,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ==================== HELPERS ====================
+
+    private void preloadExample() {
+        // Preload nodes
+        model.addNode(new StructuralNode(1, 0, 0, 0));
+        model.addNode(new StructuralNode(2, 0, 3, 0));
+        model.addNode(new StructuralNode(3, 4, 3, 0));
+        model.addNode(new StructuralNode(4, 4, 0, 0));
+        
+        StructuralNode n1 = model.getNode(1);
+        if (n1 != null) { n1.setFixed(true, true, true); n1.fixRZ = true; }
+        StructuralNode n4 = model.getNode(4);
+        if (n4 != null) { n4.setFixed(true, true, true); n4.fixRZ = true; }
+        
+        // Preload material & section
+        model.addMaterial(StructuralMaterial.concreteC30(1));
+        model.addSection(SectionProfile.rectColumn300(1));
+        
+        // Preload elements
+        model.addElement(new FrameElement(1, 1, 2, 1, 1));
+        model.addElement(new FrameElement(2, 2, 3, 1, 1));
+        model.addElement(new FrameElement(3, 3, 4, 1, 1));
+        
+        // Preload load pattern
+        LoadPattern lp = new LoadPattern(1, "Live", "Live");
+        lp.addLoad(2, 50.0, -10.0, 0);
+        model.addLoadPattern(lp);
+        
+        updateNodeList();
+        
+        // Preload script
+        String sampleTcl = "# Simple Portal Frame\n" +
+                "wipe\n" +
+                "model BasicBuilder -ndm 2 -ndf 3\n" +
+                "node 1 0 0\n" +
+                "node 2 0 3\n" +
+                "node 3 4 3\n" +
+                "node 4 4 0\n" +
+                "fix 1 1 1 1\n" +
+                "fix 4 1 1 1\n" +
+                "geomTransf Linear 1\n" +
+                "element elasticBeamColumn 1 1 2 0.12 2e8 0.0016 1\n" +
+                "element elasticBeamColumn 2 2 3 0.12 2e8 0.0016 1\n" +
+                "element elasticBeamColumn 3 3 4 0.12 2e8 0.0016 1\n" +
+                "timeSeries Linear 1\n" +
+                "pattern Plain 1 1 {\n" +
+                "  load 2 50.0 -10.0 0.0\n" +
+                "}\n" +
+                "system BandGeneral\n" +
+                "numberer RCM\n" +
+                "constraints Plain\n" +
+                "integrator LoadControl 1.0\n" +
+                "algorithm Linear\n" +
+                "analysis Static\n" +
+                "analyze 1\n" +
+                "puts \"Node 2 Ux: [nodeDisp 2 1]\"\n" +
+                "puts \"Node 3 Ux: [nodeDisp 3 1]\"\n";
+        binding.etScriptEditor.setText(sampleTcl);
+    }
 
     private void updateRendererModel() {
         if (renderer == null || glSurfaceView == null) return;

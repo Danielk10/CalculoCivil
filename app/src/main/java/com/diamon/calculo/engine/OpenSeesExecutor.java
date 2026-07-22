@@ -260,8 +260,8 @@ public class OpenSeesExecutor {
         // Multi-threading for solver
         String cores = String.valueOf(numCores);
         env.put("OMP_NUM_THREADS", cores);
-        env.put("OPENBLAS_NUM_THREADS", cores);
-        env.put("OPENBLAS_CORETYPE", "ARMV8"); // Fixes SIGILL (Exit code 132) on modern Androids
+        env.put("OPENBLAS_NUM_THREADS", "1"); // Limit threads to avoid OpenBLAS crashes
+        env.put("OPENBLAS_CORETYPE", "CORTEXA53"); // Safest ARMV8 fallback to prevent SIGILL
         env.put("MKL_NUM_THREADS", cores);
         env.put("OMP_STACKSIZE", "4M");
 
