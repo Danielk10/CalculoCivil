@@ -24,10 +24,20 @@ import com.diamon.calculo.terminal.TerminalCommandParser;
 import com.diamon.calculo.ui.AboutActivity;
 import com.diamon.calculo.ui.PrivacyPolicyActivity;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import android.view.MotionEvent;
+import android.os.Environment;
+
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -61,6 +71,21 @@ public class MainActivity extends AppCompatActivity {
     // Terminal
     private LinuxTerminalView terminalView;
     private TerminalCommandParser commandParser;
+
+    // File picker launcher
+    private final ActivityResultLauncher<String[]> filePickerLauncher =
+            registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+                if (uri != null) {
+                    try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+                        byte[] bytes = new byte[inputStream.available()];
+                        inputStream.read(bytes);
+                        binding.etScriptEditor.setText(new String(bytes));
+                        Toast.makeText(this, "Script importado exitosamente", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Error leyendo archivo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +175,19 @@ public class MainActivity extends AppCompatActivity {
         // Script editor buttons
         binding.btnRunTcl.setOnClickListener(v -> runScriptFromEditor("tcl"));
         binding.btnRunPython.setOnClickListener(v -> runScriptFromEditor("py"));
+        binding.btnImport.setOnClickListener(v -> filePickerLauncher.launch(new String[]{"*/*"}));
+        binding.btnExport.setOnClickListener(v -> exportScriptToFile());
+
+        // Internal scroll for Script Editor
+        binding.etScriptEditor.setOnTouchListener((v, event) -> {
+            if (v.hasFocus()) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            return false;
+        });
     }
 
     private void addNode() {
@@ -171,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
             updateNodeList();
             clearNodeInputs();
             updateRendererModel();
-            Toast.makeText(this, "Node " + id + " added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nodo " + id + " agregado", Toast.LENGTH_SHORT).show();
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid input values", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Valores de entrada inválidos", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -191,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         }
         model.addMaterial(mat);
         nextMatId++;
-        Toast.makeText(this, "Material assigned: " + mat.name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Material asignado: " + mat.name, Toast.LENGTH_SHORT).show();
     }
 
     private void applyLoad() {
@@ -207,21 +245,22 @@ public class MainActivity extends AppCompatActivity {
             model.addLoadPattern(lp);
             nextLoadPatternId++;
 
-            Toast.makeText(this, "Load applied to Node " + nodeId, Toast.LENGTH_SHORT).show();
+            updateRendererModel();
+            Toast.makeText(this, "Carga aplicada al Nodo " + nodeId, Toast.LENGTH_SHORT).show();
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid load values", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Valores de carga inválidos", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void runScriptFromEditor(String type) {
         String script = binding.etScriptEditor.getText().toString().trim();
         if (script.isEmpty()) {
-            Toast.makeText(this, "Script editor is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "El editor de script está vacío", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Switch to terminal tab to show output
-        binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2));
+        binding.tvScriptOutput.setVisibility(View.VISIBLE);
+        binding.tvScriptOutput.setText("▶ Ejecutando script (" + type.toUpperCase() + ")...");
 
         executor.execute(() -> {
             String result;
@@ -232,12 +271,26 @@ public class MainActivity extends AppCompatActivity {
             }
             final String output = result;
             mainHandler.post(() -> {
-                if (terminalView != null) {
-                    terminalView.appendSystem("=== Script Execution (" + type.toUpperCase() + ") ===");
-                    terminalView.appendOutput(output);
-                }
+                binding.tvScriptOutput.setText(output);
             });
         });
+    }
+
+    private void exportScriptToFile() {
+        String text = binding.etScriptEditor.getText().toString();
+        if (text.isEmpty()) {
+            Toast.makeText(this, "El editor está vacío", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (!downloadsDir.exists()) downloadsDir.mkdirs();
+        File outputFile = new File(downloadsDir, "script_" + System.currentTimeMillis() + ".tcl");
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            writer.write(text);
+            Toast.makeText(this, "Script guardado en Descargas:\n" + outputFile.getName(), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al guardar script: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateNodeList() {
@@ -245,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
         for (StructuralNode node : model.getNodes()) {
             sb.append(node.toString()).append("\n");
         }
-        binding.tvNodeList.setText(sb.length() > 0 ? sb.toString() : "No nodes defined yet.");
+        binding.tvNodeList.setText(sb.length() > 0 ? sb.toString() : "Sin nodos definidos aún.");
     }
 
     private void clearNodeInputs() {
@@ -259,6 +312,9 @@ public class MainActivity extends AppCompatActivity {
     // ==================== TAB 2: 3D VIEWER ====================
 
     private void setupViewerTab() {
+        binding.btnCalculate.setOnClickListener(v -> calculateModel());
+        binding.btnExportPdfViewer.setOnClickListener(v -> exportPdf());
+
         binding.btnWireframe.setOnClickListener(v -> {
             if (renderer != null) renderer.setShowDeformed(false);
         });
@@ -267,15 +323,38 @@ public class MainActivity extends AppCompatActivity {
             if (renderer != null) renderer.setShowDeformed(true);
         });
 
+        binding.btnDiagrams.setOnClickListener(v -> {
+            if (renderer != null) {
+                boolean show = !renderer.isShowDiagrams();
+                renderer.setShowDiagrams(show);
+                Toast.makeText(this, show ? "Diagramas M/V activados" : "Diagramas desactivados", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         binding.seekDeformScale.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 float scale = progress / 10.0f;
-                binding.tvScaleLabel.setText(String.format(Locale.US, "Deformation Scale: %.1fx", scale));
+                binding.tvScaleLabel.setText(String.format(Locale.US, "Escala de Deformación: %.1fx", scale));
                 if (renderer != null) renderer.setDeformationScale(scale);
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    private void calculateModel() {
+        Toast.makeText(this, "⚡ Calculando estructura con OpenSees TCL...", Toast.LENGTH_SHORT).show();
+        executor.execute(() -> {
+            String tclScript = model.generateTclScript();
+            String rawOutput = openSeesExecutor.executeTclScriptContent(tclScript);
+            AnalysisResult result = AnalysisResult.parseOpenSeesOutput(rawOutput);
+            model.setResult(result);
+
+            mainHandler.post(() -> {
+                updateRendererModel();
+                Toast.makeText(this, String.format(Locale.US, "✅ Cálculo completado!\nMax Disp: %.4e m", result.getMaxDisplacement()), Toast.LENGTH_LONG).show();
+            });
         });
     }
 
@@ -309,50 +388,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.containerTerminal.addView(terminalView);
-
-        // Quick action buttons
-        binding.btnRunTclTest.setOnClickListener(v -> {
-            binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2));
-            executor.execute(() -> {
-                TerminalCommandParser.CommandResult result = commandParser.execute("run-test-tcl");
-                mainHandler.post(() -> terminalView.appendOutput(result.output));
-            });
-        });
-
-        binding.btnRunPyTest.setOnClickListener(v -> {
-            binding.tabLayout.selectTab(binding.tabLayout.getTabAt(2));
-            executor.execute(() -> {
-                TerminalCommandParser.CommandResult result = commandParser.execute("run-test-py");
-                mainHandler.post(() -> terminalView.appendOutput(result.output));
-            });
-        });
-
-        binding.btnExportPdf.setOnClickListener(v -> exportPdf());
     }
 
     // ==================== PDF EXPORT ====================
 
     private void exportPdf() {
-        File reportsDir = new File(getFilesDir(), "reports");
-        if (!reportsDir.exists()) reportsDir.mkdirs();
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (!downloadsDir.exists()) downloadsDir.mkdirs();
 
-        String filename = "report_" + System.currentTimeMillis() + ".pdf";
-        File outputFile = new File(reportsDir, filename);
+        String filename = "Reporte_Estructural_" + System.currentTimeMillis() + ".pdf";
+        File outputFile = new File(downloadsDir, filename);
 
         executor.execute(() -> {
             PDFReportGenerator generator = new PDFReportGenerator();
             boolean success = generator.generateReport(this, model,
-                    "Structural Analysis Project", "Engineer", outputFile);
+                    "Análisis Estructural SAP2000", "Ingeniero Calculista", outputFile);
 
             mainHandler.post(() -> {
                 if (success) {
-                    Toast.makeText(this, "PDF saved: " + outputFile.getAbsolutePath(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "📄 Reporte PDF guardado en Descargas:\n" + outputFile.getName(), Toast.LENGTH_LONG).show();
                     if (terminalView != null) {
-                        terminalView.appendSystem("PDF report generated: " + outputFile.getAbsolutePath());
+                        terminalView.appendSystem("Reporte PDF generado en Descargas: " + outputFile.getAbsolutePath());
                     }
                 } else {
-                    Toast.makeText(this, "Failed to generate PDF", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error al generar reporte PDF", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -485,13 +544,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateRendererModel() {
         if (renderer == null || glSurfaceView == null) return;
-        
+
         int nNodes = model.getNodes().size();
         int nElems = model.getElements().size();
-        
+
+        // 1. Nodes (Orange)
         float[] nodePos = new float[nNodes * 3];
         float[] nodeCol = new float[nNodes * 4];
-        
         int i = 0, c = 0;
         for (StructuralNode node : model.getNodes()) {
             nodePos[i++] = (float) node.x;
@@ -499,10 +558,10 @@ public class MainActivity extends AppCompatActivity {
             nodePos[i++] = (float) node.z;
             nodeCol[c++] = 1.0f; nodeCol[c++] = 0.5f; nodeCol[c++] = 0.0f; nodeCol[c++] = 1.0f;
         }
-        
+
+        // 2. Elements (Light Blue)
         float[] elemPos = new float[nElems * 2 * 3];
         float[] elemCol = new float[nElems * 2 * 4];
-        
         i = 0; c = 0;
         for (FrameElement elem : model.getElements()) {
             StructuralNode n1 = model.getNode(elem.nodeI);
@@ -510,16 +569,157 @@ public class MainActivity extends AppCompatActivity {
             if (n1 != null && n2 != null) {
                 elemPos[i++] = (float) n1.x; elemPos[i++] = (float) n1.y; elemPos[i++] = (float) n1.z;
                 elemPos[i++] = (float) n2.x; elemPos[i++] = (float) n2.y; elemPos[i++] = (float) n2.z;
-                for(int k=0; k<2; k++) {
+                for (int k = 0; k < 2; k++) {
                     elemCol[c++] = 0.0f; elemCol[c++] = 0.8f; elemCol[c++] = 1.0f; elemCol[c++] = 1.0f;
                 }
             }
         }
-        
+
+        // 3. Load vectors (Red/Yellow force arrows)
+        List<Float> loadLines = new ArrayList<>();
+        List<Float> loadColors = new ArrayList<>();
+        for (LoadPattern lp : model.getLoadPatterns()) {
+            if (lp.loads != null) {
+                for (NodeLoad nl : lp.loads) {
+                    StructuralNode node = model.getNode(nl.nodeId);
+                    if (node != null) {
+                        float startX = (float) node.x;
+                        float startY = (float) node.y;
+                        float startZ = (float) node.z;
+                        float endX = startX + (float) (nl.fx * 0.02);
+                        float endY = startY + (float) (nl.fy * 0.02);
+                        float endZ = startZ + (float) (nl.fz * 0.02);
+
+                        loadLines.add(startX); loadLines.add(startY); loadLines.add(startZ);
+                        loadLines.add(endX); loadLines.add(endY); loadLines.add(endZ);
+
+                        for (int k = 0; k < 2; k++) {
+                            loadColors.add(1.0f); loadColors.add(0.2f); loadColors.add(0.0f); loadColors.add(1.0f);
+                        }
+                    }
+                }
+            }
+        }
+        float[] loadPos = new float[loadLines.size()];
+        for (int k = 0; k < loadLines.size(); k++) loadPos[k] = loadLines.get(k);
+        float[] loadCol = new float[loadColors.size()];
+        for (int k = 0; k < loadColors.size(); k++) loadCol[k] = loadColors.get(k);
+
+        // 4. Deformed shape (Green/Cyan) & Moment Diagrams (Magenta)
+        AnalysisResult res = model.getResult();
+        float[] defPos = null;
+        float[] defCol = null;
+        float[] diagPos = null;
+        float[] diagCol = null;
+
+        if (res != null) {
+            Map<Integer, double[]> disps = res.getNodeDisplacements();
+            if (disps != null && !disps.isEmpty()) {
+                defPos = new float[nElems * 2 * 3];
+                defCol = new float[nElems * 2 * 4];
+                int di = 0, dc = 0;
+                float scale = 5.0f;
+                for (FrameElement elem : model.getElements()) {
+                    StructuralNode n1 = model.getNode(elem.nodeI);
+                    StructuralNode n2 = model.getNode(elem.nodeJ);
+                    if (n1 != null && n2 != null) {
+                        double[] d1 = disps.get(n1.id);
+                        double[] d2 = disps.get(n2.id);
+                        float dx1 = d1 != null ? (float) d1[0] * scale : 0f;
+                        float dy1 = d1 != null ? (float) d1[1] * scale : 0f;
+                        float dz1 = d1 != null ? (float) d1[2] * scale : 0f;
+                        float dx2 = d2 != null ? (float) d2[0] * scale : 0f;
+                        float dy2 = d2 != null ? (float) d2[1] * scale : 0f;
+                        float dz2 = d2 != null ? (float) d2[2] * scale : 0f;
+
+                        defPos[di++] = (float) n1.x + dx1;
+                        defPos[di++] = (float) n1.y + dy1;
+                        defPos[di++] = (float) n1.z + dz1;
+
+                        defPos[di++] = (float) n2.x + dx2;
+                        defPos[di++] = (float) n2.y + dy2;
+                        defPos[di++] = (float) n2.z + dz2;
+
+                        for (int k = 0; k < 2; k++) {
+                            defCol[dc++] = 0.0f; defCol[dc++] = 1.0f; defCol[dc++] = 0.5f; defCol[dc++] = 1.0f;
+                        }
+                    }
+                }
+            }
+
+            Map<Integer, double[]> forces = res.getElementForces();
+            if (forces != null && !forces.isEmpty()) {
+                List<Float> diagLines = new ArrayList<>();
+                List<Float> diagColors = new ArrayList<>();
+
+                for (FrameElement elem : model.getElements()) {
+                    StructuralNode n1 = model.getNode(elem.nodeI);
+                    StructuralNode n2 = model.getNode(elem.nodeJ);
+                    double[] f = forces.get(elem.id);
+                    if (n1 != null && n2 != null && f != null) {
+                        double M = f.length > 4 ? f[4] : (f.length > 2 ? f[2] : 0.0);
+                        float offset = (float) (M * 0.005);
+
+                        float L = (float) Math.hypot(n2.x - n1.x, n2.y - n1.y);
+                        if (L > 1e-4) {
+                            float nx = (float) (-(n2.y - n1.y) / L) * offset;
+                            float ny = (float) ((n2.x - n1.x) / L) * offset;
+
+                            diagLines.add((float) n1.x); diagLines.add((float) n1.y); diagLines.add((float) n1.z);
+                            diagLines.add((float) n1.x + nx); diagLines.add((float) n1.y + ny); diagLines.add((float) n1.z);
+
+                            diagLines.add((float) n1.x + nx); diagLines.add((float) n1.y + ny); diagLines.add((float) n1.z);
+                            diagLines.add((float) n2.x + nx); diagLines.add((float) n2.y + ny); diagLines.add((float) n2.z);
+
+                            diagLines.add((float) n2.x + nx); diagLines.add((float) n2.y + ny); diagLines.add((float) n2.z);
+                            diagLines.add((float) n2.x); diagLines.add((float) n2.y); diagLines.add((float) n2.z);
+
+                            for (int k = 0; k < 6; k++) {
+                                diagColors.add(1.0f); diagColors.add(0.0f); diagColors.add(1.0f); diagColors.add(1.0f);
+                            }
+                        }
+                    }
+                }
+                diagPos = new float[diagLines.size()];
+                for (int k = 0; k < diagLines.size(); k++) diagPos[k] = diagLines.get(k);
+                diagCol = new float[diagColors.size()];
+                for (int k = 0; k < diagColors.size(); k++) diagCol[k] = diagColors.get(k);
+            }
+        }
+
+        final float[] finalDefPos = defPos;
+        final float[] finalDefCol = defCol;
+        final float[] finalDiagPos = diagPos;
+        final float[] finalDiagCol = diagCol;
+
         glSurfaceView.queueEvent(() -> {
             renderer.setNodes(nodePos, nodeCol);
             renderer.setElements(elemPos, elemCol);
+            renderer.setLoads(loadPos, loadCol);
+            if (finalDefPos != null) renderer.setDeformedShape(finalDefPos, finalDefCol);
+            if (finalDiagPos != null) renderer.setDiagrams(finalDiagPos, finalDiagCol);
         });
+
+        updateViewerOverlay();
+    }
+
+    private void updateViewerOverlay() {
+        if (binding.tvViewerOverlay == null) return;
+        int nodesCount = model.getNodes().size();
+        int elemCount = model.getElements().size();
+        AnalysisResult res = model.getResult();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SAP2000 Structural Summary\n");
+        sb.append(String.format("Nodes: %d | Elements: %d\n", nodesCount, elemCount));
+        if (res != null) {
+            sb.append(String.format(Locale.US, "Max Disp: %.4e m\n", res.getMaxDisplacement()));
+            sb.append(String.format(Locale.US, "Max Moment: %.2f kN·m\n", res.getMaxMoment()));
+            sb.append("Status: Calculated (OpenSees)");
+        } else {
+            sb.append("Status: Ready (Click CALCULAR)");
+        }
+        binding.tvViewerOverlay.setText(sb.toString());
     }
 
     private double parseDouble(String text, double defaultValue) {

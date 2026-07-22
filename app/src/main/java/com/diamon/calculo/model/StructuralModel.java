@@ -144,11 +144,20 @@ public class StructuralModel {
         // Print results
         sb.append("# --- Results ---\n");
         for (StructuralNode node : nodes) {
-            if (!node.isFullyFixed()) {
-                sb.append(String.format(
-                        "puts \"Node %d: Ux=[nodeDisp %d 1] Uy=[nodeDisp %d 2]\"\n",
+            if (is3D) {
+                sb.append(String.format(Locale.US,
+                        "puts \"DISP %d [nodeDisp %d 1] [nodeDisp %d 2] [nodeDisp %d 3]\"\n",
+                        node.id, node.id, node.id, node.id));
+            } else {
+                sb.append(String.format(Locale.US,
+                        "puts \"DISP %d [nodeDisp %d 1] [nodeDisp %d 2] 0.0\"\n",
                         node.id, node.id, node.id));
             }
+        }
+        for (FrameElement elem : elements) {
+            sb.append(String.format(Locale.US,
+                    "catch { puts \"FORCE %d [eleResponse %d basicForces]\" }\n",
+                    elem.id, elem.id));
         }
         sb.append("\nexit\n");
         return sb.toString();

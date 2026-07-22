@@ -83,6 +83,13 @@ public class Structural3DRenderer implements GLSurfaceView.Renderer {
     private int[] deformedVBO = new int[2];
     private boolean showDeformed = false;
 
+    // Load vectors & diagrams data
+    private int[] loadVBO = new int[2];
+    private int loadVertexCount = 0;
+    private int[] diagramVBO = new int[2];
+    private int diagramVertexCount = 0;
+    private boolean showDiagrams = true;
+
     // Screen dimensions
     private int screenWidth = 1;
     private int screenHeight = 1;
@@ -109,6 +116,8 @@ public class Structural3DRenderer implements GLSurfaceView.Renderer {
         GLES30.glGenBuffers(2, elemVBO, 0);
         GLES30.glGenBuffers(2, gridVBO, 0);
         GLES30.glGenBuffers(2, deformedVBO, 0);
+        GLES30.glGenBuffers(2, loadVBO, 0);
+        GLES30.glGenBuffers(2, diagramVBO, 0);
 
         createGrid();
     }
@@ -158,6 +167,20 @@ public class Structural3DRenderer implements GLSurfaceView.Renderer {
             // Draw deformed shape
             if (showDeformed && deformedVertexCount > 0) {
                 drawVBO(deformedVBO, deformedVertexCount, GLES30.GL_LINES);
+            }
+
+            // Draw loads (force arrows)
+            if (loadVertexCount > 0) {
+                GLES30.glLineWidth(3.0f);
+                drawVBO(loadVBO, loadVertexCount, GLES30.GL_LINES);
+                GLES30.glLineWidth(2.0f);
+            }
+
+            // Draw diagrams (moment/shear)
+            if (showDiagrams && diagramVertexCount > 0) {
+                GLES30.glLineWidth(2.5f);
+                drawVBO(diagramVBO, diagramVertexCount, GLES30.GL_LINES);
+                GLES30.glLineWidth(2.0f);
             }
 
             // Draw nodes
@@ -229,10 +252,38 @@ public class Structural3DRenderer implements GLSurfaceView.Renderer {
         uploadVBO(deformedVBO, positions, colors);
     }
 
+    public void setLoads(float[] positions, float[] colors) {
+        if (positions == null || positions.length == 0) {
+            loadVertexCount = 0;
+            return;
+        }
+        loadVertexCount = positions.length / 3;
+        uploadVBO(loadVBO, positions, colors);
+    }
+
+    public void setDiagrams(float[] positions, float[] colors) {
+        if (positions == null || positions.length == 0) {
+            diagramVertexCount = 0;
+            return;
+        }
+        diagramVertexCount = positions.length / 3;
+        uploadVBO(diagramVBO, positions, colors);
+    }
+
+    public void setShowDiagrams(boolean show) {
+        this.showDiagrams = show;
+    }
+
+    public boolean isShowDiagrams() {
+        return showDiagrams;
+    }
+
     public void clearModel() {
         nodeCount = 0;
         elemVertexCount = 0;
         deformedVertexCount = 0;
+        loadVertexCount = 0;
+        diagramVertexCount = 0;
         hasModel = false;
         showDeformed = false;
     }

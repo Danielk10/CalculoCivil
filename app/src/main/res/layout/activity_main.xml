@@ -427,6 +427,20 @@
                                     android:backgroundTint="@color/on_surface_dim"
                                     android:textSize="12sp" />
                             </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvScriptOutput"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@color/terminal_bg"
+                                android:fontFamily="monospace"
+                                android:padding="8dp"
+                                android:scrollbars="vertical"
+                                android:text="System log output..."
+                                android:textColor="@color/terminal_green"
+                                android:textSize="11sp"
+                                android:visibility="gone" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -445,7 +459,21 @@
                     android:id="@+id/containerGL"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvViewerOverlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="12dp"
+                        android:background="#CC1C1C1E"
+                        android:fontFamily="monospace"
+                        android:padding="10dp"
+                        android:text="SAP2000 Structural Summary\nNodes: 0 | Elements: 0\nStatus: Ready"
+                        android:textColor="@color/terminal_green"
+                        android:textSize="11sp" />
+                </FrameLayout>
 
                 <!-- Viewer Controls -->
                 <LinearLayout
@@ -454,6 +482,38 @@
                     android:orientation="vertical"
                     android:background="@color/card_bg_dark"
                     android:padding="8dp">
+
+                    <!-- Primary Action Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/btnCalculate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="⚡ CALCULAR ESTRUCTURA"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:padding="6dp"
+                            android:backgroundTint="@color/accent_green"
+                            android:layout_marginEnd="4dp" />
+
+                        <Button
+                            android:id="@+id/btnExportPdfViewer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📄 REPORTE PDF"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:padding="6dp"
+                            android:backgroundTint="@color/accent_orange" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -488,16 +548,16 @@
                             android:layout_marginEnd="4dp" />
 
                         <Button
-                            android:id="@+id/btnModeShapes"
+                            android:id="@+id/btnDiagrams"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/btn_mode_shapes"
+                            android:text="Diagramas M/V"
                             android:textSize="10sp"
                             android:padding="4dp"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:backgroundTint="@color/accent_green" />
+                            android:backgroundTint="@color/purple_500" />
                     </LinearLayout>
 
                     <SeekBar
@@ -529,60 +589,11 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <!-- Quick Action Buttons -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/card_bg_dark"
-                    android:padding="8dp"
-                    android:weightSum="3">
-
-                    <Button
-                        android:id="@+id/btnRunTclTest"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/btn_run_tcl_test"
-                        android:textSize="10sp"
-                        android:padding="4dp"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:backgroundTint="@color/accent_blue"
-                        android:layout_marginEnd="4dp" />
-
-                    <Button
-                        android:id="@+id/btnRunPyTest"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/btn_run_py_test"
-                        android:textSize="10sp"
-                        android:padding="4dp"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:backgroundTint="@color/accent_green"
-                        android:layout_marginEnd="4dp" />
-
-                    <Button
-                        android:id="@+id/btnExportPdf"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/btn_export_pdf"
-                        android:textSize="10sp"
-                        android:padding="4dp"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:backgroundTint="@color/accent_orange" />
-                </LinearLayout>
-
                 <!-- Terminal Container -->
                 <FrameLayout
                     android:id="@+id/containerTerminal"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
         </FrameLayout>
