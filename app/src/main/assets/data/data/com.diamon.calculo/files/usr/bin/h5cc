@@ -265,15 +265,15 @@ fi
 
 # If -show was passed, only output the command-line, don't execute it
 if test "$do_show" = "yes"; then
-  echo /data/data/com.termux/files/usr/bin/clang ${compile_args:+"${compile_args} "}"$@" "$pc_flags"
+  echo /data/data/com.diamon.calculo/files/usr/bin/clang ${compile_args:+"${compile_args} "}"$@" "$pc_flags"
   exit $EXIT_SUCCESS
 fi
 
-/data/data/com.termux/files/usr/bin/clang $compile_args "$@" $pc_flags
+/data/data/com.diamon.calculo/files/usr/bin/clang $compile_args "$@" $pc_flags
 status=$?
 
 if test $status -ne 0; then
-  echo "compile failed with command: /data/data/com.termux/files/usr/bin/clang $compile_args $@ $pc_flags" >&2
+  echo "compile failed with command: /data/data/com.diamon.calculo/files/usr/bin/clang $compile_args $@ $pc_flags" >&2
 fi
 
 exit $status

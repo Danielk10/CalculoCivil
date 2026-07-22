@@ -105,36 +105,124 @@ public class AssetHelper {
         if (!usrLib.exists()) usrLib.mkdirs();
 
         boolean ok = true;
-        // Binaries
+
+        // === Binarios principales ===
         ok &= linkTool(new File(usrBin, "OpenSees"), new File(nativeLibDir, "libOpenSees.so"));
         ok &= linkTool(new File(usrBin, "opensees.so"), new File(nativeLibDir, "libopensees.so"));
         ok &= linkTool(new File(usrBin, "tclsh"), new File(nativeLibDir, "libtclsh.so"));
         ok &= linkTool(new File(usrBin, "tclsh8.6"), new File(nativeLibDir, "libtclsh8_6.so"));
         ok &= linkTool(new File(usrBin, "wish"), new File(nativeLibDir, "libwish.so"));
         ok &= linkTool(new File(usrBin, "wish8.6"), new File(nativeLibDir, "libwish8_6.so"));
-        ok &= linkTool(new File(usrBin, "h5cc"), new File(nativeLibDir, "libh5cc.so"));
 
-        // Libraries
+        // === Herramientas HDF5 ===
+        ok &= linkTool(new File(usrBin, "h5clear"), new File(nativeLibDir, "libh5clear.so"));
+        ok &= linkTool(new File(usrBin, "h5copy"), new File(nativeLibDir, "libh5copy.so"));
+        ok &= linkTool(new File(usrBin, "h5debug"), new File(nativeLibDir, "libh5debug.so"));
+        ok &= linkTool(new File(usrBin, "h5delete"), new File(nativeLibDir, "libh5delete.so"));
+        ok &= linkTool(new File(usrBin, "h5diff"), new File(nativeLibDir, "libh5diff.so"));
+        ok &= linkTool(new File(usrBin, "h5dump"), new File(nativeLibDir, "libh5dump.so"));
+        ok &= linkTool(new File(usrBin, "h5format_convert"), new File(nativeLibDir, "libh5format_convert.so"));
+        ok &= linkTool(new File(usrBin, "h5import"), new File(nativeLibDir, "libh5import.so"));
+        ok &= linkTool(new File(usrBin, "h5jam"), new File(nativeLibDir, "libh5jam.so"));
+        ok &= linkTool(new File(usrBin, "h5ls"), new File(nativeLibDir, "libh5ls.so"));
+        ok &= linkTool(new File(usrBin, "h5mkgrp"), new File(nativeLibDir, "libh5mkgrp.so"));
+        ok &= linkTool(new File(usrBin, "h5perf_serial"), new File(nativeLibDir, "libh5perf_serial.so"));
+        ok &= linkTool(new File(usrBin, "h5repack"), new File(nativeLibDir, "libh5repack.so"));
+        ok &= linkTool(new File(usrBin, "h5repart"), new File(nativeLibDir, "libh5repart.so"));
+        ok &= linkTool(new File(usrBin, "h5stat"), new File(nativeLibDir, "libh5stat.so"));
+        ok &= linkTool(new File(usrBin, "h5unjam"), new File(nativeLibDir, "libh5unjam.so"));
+        ok &= linkTool(new File(usrBin, "h5watch"), new File(nativeLibDir, "libh5watch.so"));
+
+        // === Librerías HDF5 ===
         ok &= linkTool(new File(usrLib, "libhdf5.so"), new File(nativeLibDir, "libhdf5.so"));
         ok &= linkTool(new File(usrLib, "libhdf5.so.1000"), new File(nativeLibDir, "libhdf5_so_1000.so"));
         ok &= linkTool(new File(usrLib, "libhdf5.so.1000.0.0"), new File(nativeLibDir, "libhdf5_so_1000_0_0.so"));
         ok &= linkTool(new File(usrLib, "libhdf5_hl.so"), new File(nativeLibDir, "libhdf5_hl.so"));
         ok &= linkTool(new File(usrLib, "libhdf5_hl.so.1000"), new File(nativeLibDir, "libhdf5_hl_so_1000.so"));
         ok &= linkTool(new File(usrLib, "libhdf5_hl.so.1000.0.0"), new File(nativeLibDir, "libhdf5_hl_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_cpp.so"), new File(nativeLibDir, "libhdf5_cpp.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_cpp.so.1000"), new File(nativeLibDir, "libhdf5_cpp_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_cpp.so.1000.0.0"), new File(nativeLibDir, "libhdf5_cpp_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_tools.so"), new File(nativeLibDir, "libhdf5_tools.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_tools.so.1000"), new File(nativeLibDir, "libhdf5_tools_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_tools.so.1000.0.0"), new File(nativeLibDir, "libhdf5_tools_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_f90cstub.so"), new File(nativeLibDir, "libhdf5_f90cstub.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_f90cstub.so.1000"), new File(nativeLibDir, "libhdf5_f90cstub_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_f90cstub.so.1000.0.0"), new File(nativeLibDir, "libhdf5_f90cstub_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_fortran.so"), new File(nativeLibDir, "libhdf5_fortran.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_fortran.so.1000"), new File(nativeLibDir, "libhdf5_fortran_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_fortran.so.1000.0.0"), new File(nativeLibDir, "libhdf5_fortran_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_cpp.so"), new File(nativeLibDir, "libhdf5_hl_cpp.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_cpp.so.1000"), new File(nativeLibDir, "libhdf5_hl_cpp_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_cpp.so.1000.0.0"), new File(nativeLibDir, "libhdf5_hl_cpp_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_f90cstub.so"), new File(nativeLibDir, "libhdf5_hl_f90cstub.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_f90cstub.so.1000"), new File(nativeLibDir, "libhdf5_hl_f90cstub_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_f90cstub.so.1000.0.0"), new File(nativeLibDir, "libhdf5_hl_f90cstub_so_1000_0_0.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_fortran.so"), new File(nativeLibDir, "libhdf5_hl_fortran.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_fortran.so.1000"), new File(nativeLibDir, "libhdf5_hl_fortran_so_1000.so"));
+        ok &= linkTool(new File(usrLib, "libhdf5_hl_fortran.so.1000.0.0"), new File(nativeLibDir, "libhdf5_hl_fortran_so_1000_0_0.so"));
+
+        // === OpenBLAS ===
         ok &= linkTool(new File(usrLib, "libopenblas.so"), new File(nativeLibDir, "libopenblas.so"));
         ok &= linkTool(new File(usrLib, "libopenblas.so.0"), new File(nativeLibDir, "libopenblas_so_0.so"));
-        ok &= linkTool(new File(usrLib, "libopenblasp-r0.3.33.dev.so"), new File(nativeLibDir, "libopenblasp_r0_3_33_dev.so"));
+        ok &= linkTool(new File(usrLib, "libopenblasp-r0.3.34.dev.so"), new File(nativeLibDir, "libopenblasp_r0_3_34_dev.so"));
+
+        // === Tcl/Tk ===
         ok &= linkTool(new File(usrLib, "libtcl8.6.so"), new File(nativeLibDir, "libtcl8_6.so"));
         ok &= linkTool(new File(usrLib, "libtk8.6.so"), new File(nativeLibDir, "libtk8_6.so"));
-        ok &= linkTool(new File(usrLib, "libz.so.1"), new File(nativeLibDir, "libz_so_1.so"));
 
-        // X11 and Font Libraries
+        // === Zlib ===
+        ok &= linkTool(new File(usrLib, "libz.so"), new File(nativeLibDir, "libz.so"));
+        ok &= linkTool(new File(usrLib, "libz.so.1"), new File(nativeLibDir, "libz_so_1.so"));
+        ok &= linkTool(new File(usrLib, "libz.so.1.3.2"), new File(nativeLibDir, "libz_so_1_3_2.so"));
+
+        // === Python ===
+        ok &= linkTool(new File(usrLib, "libpython3.11.so"), new File(nativeLibDir, "libpython3_11.so"));
+        ok &= linkTool(new File(usrLib, "libpython3.11.so.1.0"), new File(nativeLibDir, "libpython3_11_so_1_0.so"));
+
+        // === AEC / SZlib ===
+        ok &= linkTool(new File(usrLib, "libaec.so"), new File(nativeLibDir, "libaec.so"));
+        ok &= linkTool(new File(usrLib, "libaec.so.0"), new File(nativeLibDir, "libaec_so_0.so"));
+        ok &= linkTool(new File(usrLib, "libaec.so.0.1.7"), new File(nativeLibDir, "libaec_so_0_1_7.so"));
+        ok &= linkTool(new File(usrLib, "libsz.so"), new File(nativeLibDir, "libsz.so"));
+        ok &= linkTool(new File(usrLib, "libsz.so.2"), new File(nativeLibDir, "libsz_so_2.so"));
+        ok &= linkTool(new File(usrLib, "libsz.so.2.0.1"), new File(nativeLibDir, "libsz_so_2_0_1.so"));
+
+        // === Bzip2 ===
+        ok &= linkTool(new File(usrLib, "libbz2.so"), new File(nativeLibDir, "libbz2.so"));
+        ok &= linkTool(new File(usrLib, "libbz2.so.1.0"), new File(nativeLibDir, "libbz2_so_1_0.so"));
+        ok &= linkTool(new File(usrLib, "libbz2.so.1.0.8"), new File(nativeLibDir, "libbz2_so_1_0_8.so"));
+
+        // === Expat ===
+        ok &= linkTool(new File(usrLib, "libexpat.so"), new File(nativeLibDir, "libexpat.so"));
+        ok &= linkTool(new File(usrLib, "libexpat.so.1"), new File(nativeLibDir, "libexpat_so_1.so"));
+        ok &= linkTool(new File(usrLib, "libexpat.so.1.12.2"), new File(nativeLibDir, "libexpat_so_1_12_2.so"));
+
+        // === Brotli ===
+        ok &= linkTool(new File(usrLib, "libbrotlicommon.so"), new File(nativeLibDir, "libbrotlicommon.so"));
+        ok &= linkTool(new File(usrLib, "libbrotlidec.so"), new File(nativeLibDir, "libbrotlidec.so"));
+
+        // === PNG ===
+        ok &= linkTool(new File(usrLib, "libpng16.so"), new File(nativeLibDir, "libpng16.so"));
+
+        // === X11 y Fuentes ===
         ok &= linkTool(new File(usrLib, "libX11.so"), new File(nativeLibDir, "libX11.so"));
+        ok &= linkTool(new File(usrLib, "libX11.so.6"), new File(nativeLibDir, "libX11_so_6.so"));
+        ok &= linkTool(new File(usrLib, "libXau.so"), new File(nativeLibDir, "libXau.so"));
+        ok &= linkTool(new File(usrLib, "libxcb.so"), new File(nativeLibDir, "libxcb.so"));
+        ok &= linkTool(new File(usrLib, "libXdmcp.so"), new File(nativeLibDir, "libXdmcp.so"));
         ok &= linkTool(new File(usrLib, "libXext.so"), new File(nativeLibDir, "libXext.so"));
         ok &= linkTool(new File(usrLib, "libXft.so"), new File(nativeLibDir, "libXft.so"));
+        ok &= linkTool(new File(usrLib, "libXrender.so"), new File(nativeLibDir, "libXrender.so"));
         ok &= linkTool(new File(usrLib, "libXss.so"), new File(nativeLibDir, "libXss.so"));
         ok &= linkTool(new File(usrLib, "libfontconfig.so"), new File(nativeLibDir, "libfontconfig.so"));
         ok &= linkTool(new File(usrLib, "libfreetype.so"), new File(nativeLibDir, "libfreetype.so"));
+
+        // === Android Support ===
+        ok &= linkTool(new File(usrLib, "libandroid-support.so"), new File(nativeLibDir, "libandroid_support.so"));
+
+        // === C++ Standard Library ===
+        ok &= linkTool(new File(usrLib, "libc++_shared.so"), new File(nativeLibDir, "libc++_shared.so"));
 
         return ok;
     }

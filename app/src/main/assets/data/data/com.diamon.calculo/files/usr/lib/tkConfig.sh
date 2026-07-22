@@ -31,7 +31,7 @@ TK_DBGX=
 TK_LIB_FILE='libtk8.6.so'
 
 # Additional libraries to use when linking Tk.
-TK_LIBS='-lX11 -lXss -lXext -L/data/data/com.termux/files/usr/lib -lXft -lfontconfig -lfreetype -lfontconfig  -lpthread -ldl -lz  -lpthread -lm'
+TK_LIBS='-lX11 -lXss -lXext -L/data/data/com.diamon.calculo/files/usr/lib -lXft -lfontconfig -lfreetype -lfontconfig  -lpthread -ldl -lz  -lpthread -lm'
 
 # Top-level directory in which Tk's platform-independent files are
 # installed.

@@ -11,5 +11,5 @@ URL: https://www.tcl-lang.org/
 Version: 8.6.18
 Requires: tcl >= 8.6
 Libs: -L${libdir} -ltk8.6 -ltkstub8.6
-Libs.private: -L/data/data/com.termux/files/usr/lib -lXft -lfontconfig -lfreetype -lfontconfig -lX11 -lXss -lXext
+Libs.private: -L/data/data/com.diamon.calculo/files/usr/lib -lXft -lfontconfig -lfreetype -lfontconfig -lX11 -lXss -lXext
 Cflags: -I${includedir}
