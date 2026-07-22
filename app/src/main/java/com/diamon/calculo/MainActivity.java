@@ -314,10 +314,13 @@ public class MainActivity extends AppCompatActivity {
         }
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (!downloadsDir.exists()) downloadsDir.mkdirs();
-        File outputFile = new File(downloadsDir, "script_" + System.currentTimeMillis() + ".tcl");
+        
+        boolean isPython = text.contains("import opensees") || text.contains("def ") || text.contains("print(");
+        String ext = isPython ? ".py" : ".tcl";
+        File outputFile = new File(downloadsDir, "script_" + System.currentTimeMillis() + ext);
         try (FileWriter writer = new FileWriter(outputFile)) {
             writer.write(text);
-            Toast.makeText(this, "Script guardado en Descargas:\n" + outputFile.getName(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Script (" + (isPython ? "Python" : "TCL") + ") guardado en Descargas:\n" + outputFile.getName(), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(this, "Error al guardar script: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
