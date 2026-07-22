@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
         // Add Node button
         binding.btnAddNode.setOnClickListener(v -> addNode());
 
+        // Add Element button
+        binding.btnAddElement.setOnClickListener(v -> addElement());
+
         // Assign Material button
         binding.btnAssignMaterial.setOnClickListener(v -> assignMaterial());
 
@@ -212,6 +215,33 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Nodo " + id + " agregado", Toast.LENGTH_SHORT).show();
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Valores de entrada inválidos", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void addElement() {
+        try {
+            String idStr = binding.etElemId.getText().toString().trim();
+            int id = idStr.isEmpty() ? nextElemId : Integer.parseInt(idStr);
+            int nodeI = Integer.parseInt(binding.etNodeI.getText().toString().trim());
+            int nodeJ = Integer.parseInt(binding.etNodeJ.getText().toString().trim());
+
+            if (model.getNode(nodeI) == null || model.getNode(nodeJ) == null) {
+                Toast.makeText(this, "Nodos de conexión (" + nodeI + ", " + nodeJ + ") deben existir primero", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            FrameElement elem = new FrameElement(id, nodeI, nodeJ, 1, 1);
+            model.addElement(elem);
+            nextElemId = id + 1;
+
+            updateElementList();
+            binding.etElemId.setText("");
+            binding.etNodeI.setText("");
+            binding.etNodeJ.setText("");
+            updateRendererModel();
+            Toast.makeText(this, "Barra " + id + " conectada (Nodo " + nodeI + " ➔ " + nodeJ + ")", Toast.LENGTH_SHORT).show();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Ingrese IDs válidos para los nodos i y j", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -299,6 +329,14 @@ public class MainActivity extends AppCompatActivity {
             sb.append(node.toString()).append("\n");
         }
         binding.tvNodeList.setText(sb.length() > 0 ? sb.toString() : "Sin nodos definidos aún.");
+    }
+
+    private void updateElementList() {
+        StringBuilder sb = new StringBuilder();
+        for (FrameElement elem : model.getElements()) {
+            sb.append(String.format(Locale.US, "Barra %d: Nodo %d ➔ Nodo %d\n", elem.id, elem.nodeI, elem.nodeJ));
+        }
+        binding.tvElementList.setText(sb.length() > 0 ? sb.toString() : "Sin barras definidas aún.");
     }
 
     private void clearNodeInputs() {
@@ -511,6 +549,7 @@ public class MainActivity extends AppCompatActivity {
         model.addLoadPattern(lp);
         
         updateNodeList();
+        updateElementList();
         
         // Preload script
         String sampleTcl = "# Simple Portal Frame\n" +

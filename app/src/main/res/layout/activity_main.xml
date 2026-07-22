@@ -179,6 +179,91 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
+                    <!-- Card: Element / Member Definition -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardBackgroundColor="@color/card_bg_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Definición de Barras / Elementos"
+                                android:textColor="@color/accent_blue"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="12dp">
+
+                                <EditText
+                                    android:id="@+id/etElemId"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="ID Barra"
+                                    android:inputType="number"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etNodeI"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Nodo i"
+                                    android:inputType="number"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etNodeJ"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Nodo j"
+                                    android:inputType="number"
+                                    android:textColor="@color/on_surface"
+                                    android:textColorHint="@color/on_surface_dim"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/btnAddElement"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Conectar Barra (Nodo i ➔ Nodo j)"
+                                android:layout_marginTop="8dp"
+                                android:backgroundTint="@color/accent_blue" />
+
+                            <TextView
+                                android:id="@+id/tvElementList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="monospace"
+                                android:textColor="@color/on_surface_dim"
+                                android:textSize="11sp"
+                                android:text="Sin barras definidas aún." />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
                     <!-- Card: Material & Section -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
