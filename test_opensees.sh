@@ -149,8 +149,8 @@ python3 - << 'EOF_PY'
 import sys
 import opensees as ops
 
-ops.wipe()
-ops.model('Basic', 2, 3)
+# 1. Definir el modelo con sintaxis explícita de OpenSeesPy
+ops.model('basic', '-ndm', 2, '-ndf', 3)
 
 # Parámetros
 length = 10.0
@@ -159,12 +159,12 @@ E = 2.0e8
 A = 0.01
 I = 0.0001
 
-# Geometría
+# Geometría y Condiciones de Borde
 ops.node(1, 0.0, 0.0)
 ops.node(2, length, 0.0)
 ops.fix(1, 1, 1, 1)
 
-# Elemento
+# Transformación y Elemento
 ops.geomTransf('Linear', 1)
 ops.element('elasticBeamColumn', 1, 1, 2, A, E, I, 1)
 
@@ -173,13 +173,15 @@ ops.timeSeries('Linear', 1)
 ops.pattern('Plain', 1, 1)
 ops.load(2, 0.0, p_load, 0.0)
 
-# Resolver
+# Análisis
 ops.system('BandGeneral')
 ops.numberer('RCM')
 ops.constraints('Plain')
 ops.integrator('LoadControl', 1.0)
 ops.algorithm('Linear')
 ops.analysis('Static')
+
+# Resolver
 ops.analyze(1)
 
 # Guardar resultado
